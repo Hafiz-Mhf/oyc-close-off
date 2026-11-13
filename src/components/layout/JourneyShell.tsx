@@ -25,7 +25,7 @@ export function JourneyShell({ children, screenLabel, audioControls, constrained
           ? "h-[calc(100dvh-1.5rem)] tablet:h-[calc(100dvh-3rem)]"
           : "min-h-[calc(100dvh-1.5rem)] tablet:min-h-[calc(100dvh-3rem)]"
       }`}>
-        <header className="flex min-h-14 items-start justify-between gap-3 px-1 pb-3 tablet:items-center tablet:px-3 tablet:pb-5">
+        <header className={`flex min-h-14 items-start justify-between gap-3 px-1 pb-3 tablet:items-center tablet:px-3 ${constrained ? "tablet:pb-2.5" : "tablet:pb-5"}`}>
           <button
             type="button"
             onClick={onHome}
