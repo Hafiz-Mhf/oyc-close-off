@@ -17,7 +17,7 @@ export function WelcomeScreen({ onBegin }: WelcomeScreenProps) {
   return (
     <div className="flex flex-1 items-center justify-center px-5 py-10 text-center tablet:px-12 tablet:py-16">
       <motion.div
-        className="mx-auto max-w-4xl"
+        className="mx-auto w-full min-w-0 max-w-4xl"
         initial="hidden"
         animate="visible"
         variants={{ visible: { transition: { staggerChildren: reduceMotion ? 0 : 0.1 } } }}

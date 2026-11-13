@@ -64,17 +64,17 @@ export function ClosingScreen({ selected, onRevisit }: ClosingScreenProps) {
   };
 
   return (
-    <div className="flex flex-1 items-center justify-center px-5 py-10 text-center tablet:px-12 tablet:py-16">
-      <div className="mx-auto max-w-3xl">
+    <div className="flex flex-1 items-center justify-center px-5 py-8 text-center tablet:px-12 tablet:py-16">
+      <div className="mx-auto w-full min-w-0 max-w-3xl">
         <p className="text-sm font-bold tracking-[0.18em] text-oyc-cyan uppercase">Keep growing</p>
-        <h1 className="mt-4 text-balance text-4xl leading-[1.05] font-black tracking-[-0.04em] tablet:text-6xl">
+        <h1 className="mt-4 text-balance text-3xl leading-[1.08] font-black tracking-[-0.04em] phone:text-4xl tablet:text-6xl">
           The Campaign Ends. Your Journey Continues.
         </h1>
-        <p className="mx-auto mt-6 max-w-2xl text-pretty text-base leading-7 text-oyc-text-muted tablet:text-xl">
+        <p className="mx-auto mt-5 max-w-2xl text-pretty text-base leading-7 text-oyc-text-muted tablet:mt-6 tablet:text-xl">
           Keep exploring your strengths, growing your skills and taking ownership of your career.
         </p>
 
-        <div className="mx-auto mt-7 min-h-28 max-w-2xl" aria-live="polite">
+        <div className="mx-auto mt-6 min-h-28 max-w-2xl tablet:mt-7" aria-live="polite">
           <div className="rounded-2xl border border-oyc-border bg-white/5 p-5 tablet:p-6">
             <p className="text-xs font-bold tracking-[0.14em] text-oyc-cyan uppercase">
               {selectedOption ? "Your private takeaway" : "Keep moving forward"}
@@ -85,14 +85,15 @@ export function ClosingScreen({ selected, onRevisit }: ClosingScreenProps) {
           </div>
         </div>
 
-        <div className="mx-auto mt-7 flex max-w-xl flex-col gap-3 phone:flex-row phone:justify-center">
-          <Button onClick={onRevisit} className="phone:min-w-48">
+        <div className="mx-auto mt-6 flex max-w-md flex-col gap-3 tablet:mt-7 tablet:max-w-xl tablet:flex-row tablet:justify-center">
+          <Button fullWidth onClick={onRevisit} className="tablet:w-auto tablet:min-w-48">
             Revisit the Journey
           </Button>
           <Button
+            fullWidth
             variant={linkCopied ? "surface" : "secondary"}
             onClick={shareJourney}
-            className="phone:min-w-48"
+            className="tablet:w-auto tablet:min-w-48"
           >
             {linkCopied ? (
               <>
