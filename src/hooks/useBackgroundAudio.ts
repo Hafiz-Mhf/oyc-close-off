@@ -157,6 +157,25 @@ export function useBackgroundAudio() {
     if (shouldResume) void play(false);
   }, [play, trackIndex]);
 
+  useEffect(() => {
+    const pauseWhenPageIsHidden = () => {
+      if (document.visibilityState !== "hidden") return;
+
+      const audio = audioRef.current;
+      if (!audio || audio.paused) return;
+
+      userPausedRef.current = true;
+      resumeAfterTrackChangeRef.current = false;
+      cancelFade();
+      audio.volume = volumeRef.current;
+      audio.pause();
+      setPlaying(false);
+    };
+
+    document.addEventListener("visibilitychange", pauseWhenPageIsHidden);
+    return () => document.removeEventListener("visibilitychange", pauseWhenPageIsHidden);
+  }, [cancelFade]);
+
   useEffect(() => cancelFade, [cancelFade]);
 
   return {

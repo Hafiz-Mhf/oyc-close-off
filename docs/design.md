@@ -25,12 +25,12 @@
 - Keep `#00E5ED` as the primary interactive colour. Do not use `#0000FF` for primary controls on navy because contrast is insufficient; reserve it for secondary brand accents or use it against a sufficiently contrasting background.
 - Glowing cyan/purple ribbon/wave decoration may appear in the page background, **not over or inside the original poster images**.
 - Use a clean accessible sans-serif (e.g. Inter or an approved corporate font); do not attempt to re-typeset poster text.
-- Do not display standalone OYC/MRANTI logo files in the microsite. Approved logos remain visible inside the unchanged posters. Never redraw or approximate them.
+- Display the supplied official OYC logo in the global header as a home link. Never redraw or approximate it.
 
 ## 3. Screens
 ### Welcome
 - Full-viewport dark navy background, restrained wave/ribbon treatment.
-- Do not add standalone logos; Poster 1 provides the approved campaign branding inside the journey.
+- The global header uses the supplied official OYC logo and returns to the welcome screen without interrupting audio.
 - Title: **“4 Weeks. One Journey. Endless Possibilities.”**
 - Support line: **“Your journey doesn't end here.”**
 - Primary CTA: **Begin Your Journey**.

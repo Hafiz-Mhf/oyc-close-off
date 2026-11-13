@@ -69,6 +69,69 @@ button {
   touch-action: manipulation;
 }
 
+.island-button {
+  display: inline-flex;
+  min-width: 2.75rem;
+  min-height: 2.75rem;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 9999px;
+  background: transparent;
+  color: #f7fbff;
+  transition: color 180ms ease, background-color 180ms ease, transform 180ms ease;
+}
+
+.island-button:hover {
+  background: rgb(255 255 255 / 10%);
+  color: #76f7fb;
+}
+
+.island-button:active {
+  transform: scale(0.92);
+}
+
+.island-button[aria-pressed="true"] {
+  background: rgb(0 229 237 / 14%);
+  color: #00e5ed;
+}
+
+.island-range {
+  appearance: none;
+  background: transparent;
+}
+
+.island-range::-webkit-slider-runnable-track {
+  height: 0.25rem;
+  border-radius: 9999px;
+  background: rgb(255 255 255 / 20%);
+}
+
+.island-range::-webkit-slider-thumb {
+  width: 0.875rem;
+  height: 0.875rem;
+  margin-top: -0.3125rem;
+  appearance: none;
+  border-radius: 9999px;
+  background: #00e5ed;
+  box-shadow: 0 0 0 3px rgb(0 229 237 / 12%);
+}
+
+.island-range::-moz-range-track {
+  height: 0.25rem;
+  border-radius: 9999px;
+  background: rgb(255 255 255 / 20%);
+}
+
+.island-range::-moz-range-thumb {
+  width: 0.875rem;
+  height: 0.875rem;
+  border: 0;
+  border-radius: 9999px;
+  background: #00e5ed;
+}
+
 :focus-visible {
   outline: 3px solid #76f7fb;
   outline-offset: 3px;

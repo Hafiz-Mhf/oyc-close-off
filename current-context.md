@@ -29,7 +29,14 @@
 - Posters: `assets/OYC Close Off/1.png` through `7.png`, published unchanged as `public/posters/01.png` through `07.png`.
 - Approved Phase 3 audio: `public/audio/comet.mp3` followed by `public/audio/echo.mp3`, then repeated.
 - Both supplied MP3 files remain unchanged and retain their original filenames.
-- No standalone logo or invented favicon artwork is used.
+- The supplied official OYC logo is used unchanged in the global header and returns to the welcome screen without reloading.
+
+## Latest UI refinement
+
+- Replaced the separate text audio buttons with a unified Android-style media island.
+- The island retains play/pause, mute, next-track, volume, track status, keyboard access and 44px touch targets.
+- Replaced the text-only OYC header label with the supplied official logo; activating it returns to the welcome screen without interrupting audio.
+- Audio pauses whenever the page becomes hidden, including desktop tab changes and browser minimization. Returning to the page does not restart playback automatically.
 
 ## Approved interaction decisions
 
@@ -43,6 +50,7 @@
 - One persistent audio element plays Comet → Echo → Comet across story, reflection, closing and revisit transitions.
 - Play/pause, mute/unmute, next-track and 0% to 100% volume controls remain visible on mobile and desktop.
 - User pause or mute intent is never overridden by later navigation or another Begin action.
+- Backgrounding the page is treated as a pause; playback resumes only through the visible Play control.
 
 ## Phase checklist
 

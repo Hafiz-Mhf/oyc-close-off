@@ -79,6 +79,11 @@ export function JourneyApp() {
     <JourneyShell
       screenLabel={screenLabels[screen]}
       constrained={screen === "story"}
+      onHome={() => {
+        setActiveIndex(0);
+        setNavigationDirection(1);
+        setScreen("welcome");
+      }}
       audioControls={(
         <AudioControls
           trackTitle={`${currentTrack.artist} — ${currentTrack.title}`}

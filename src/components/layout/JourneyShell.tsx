@@ -1,3 +1,4 @@
+import Image from "next/image";
 import type { ReactNode } from "react";
 
 interface JourneyShellProps {
@@ -5,9 +6,10 @@ interface JourneyShellProps {
   screenLabel: string;
   audioControls?: ReactNode;
   constrained?: boolean;
+  onHome: () => void;
 }
 
-export function JourneyShell({ children, screenLabel, audioControls, constrained = false }: JourneyShellProps) {
+export function JourneyShell({ children, screenLabel, audioControls, constrained = false, onHome }: JourneyShellProps) {
   return (
     <main className="safe-area-shell relative isolate overflow-hidden">
       <div
@@ -23,13 +25,25 @@ export function JourneyShell({ children, screenLabel, audioControls, constrained
           ? "h-[calc(100dvh-1.5rem)] tablet:h-[calc(100dvh-3rem)]"
           : "min-h-[calc(100dvh-1.5rem)] tablet:min-h-[calc(100dvh-3rem)]"
       }`}>
-        <header className="flex min-h-11 items-start justify-between gap-2 px-1 pb-3 tablet:gap-4 tablet:px-3 tablet:pb-5">
-          <p className="text-xs font-bold tracking-[0.16em] text-oyc-cyan uppercase">
-            OYC Close-Off
-          </p>
+        <header className="flex min-h-14 items-start justify-between gap-3 px-1 pb-3 tablet:items-center tablet:px-3 tablet:pb-5">
+          <button
+            type="button"
+            onClick={onHome}
+            className="group inline-flex min-h-11 shrink-0 items-center rounded-xl px-1 transition-colors hover:bg-white/5"
+            aria-label="OYC Close-Off home"
+          >
+            <Image
+              src="/oyc-logo.png"
+              alt="Own Your Career"
+              width={156}
+              height={56}
+              priority
+              className="h-auto w-[6.75rem] transition-transform duration-200 group-hover:scale-[1.03] tablet:w-[8.25rem]"
+            />
+          </button>
           <div className="flex min-w-0 items-center gap-3">
             {audioControls}
-            <p className="hidden text-xs text-oyc-text-muted tablet:block">{screenLabel}</p>
+            <p className="sr-only">{screenLabel}</p>
           </div>
         </header>
         {children}
