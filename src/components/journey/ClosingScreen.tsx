@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/Button";
 import { reflectionOptions } from "@/data/reflections";
 import type { ReflectionChoice } from "@/types/journey";
@@ -13,6 +13,14 @@ interface ClosingScreenProps {
 export function ClosingScreen({ selected, onRevisit }: ClosingScreenProps) {
   const selectedOption = reflectionOptions.find((option) => option.id === selected);
   const [shareStatus, setShareStatus] = useState<string | null>(null);
+  const [linkCopied, setLinkCopied] = useState(false);
+  const copyTimerRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (copyTimerRef.current !== null) window.clearTimeout(copyTimerRef.current);
+    };
+  }, []);
 
   const copyShareUrl = async (shareUrl: string) => {
     try {
@@ -47,6 +55,11 @@ export function ClosingScreen({ selected, onRevisit }: ClosingScreenProps) {
     }
 
     const copied = await copyShareUrl(shareUrl);
+    if (copied) {
+      setLinkCopied(true);
+      if (copyTimerRef.current !== null) window.clearTimeout(copyTimerRef.current);
+      copyTimerRef.current = window.setTimeout(() => setLinkCopied(false), 2500);
+    }
     setShareStatus(copied ? "Microsite link copied." : "Could not copy the link. Copy it from your address bar.");
   };
 
@@ -76,8 +89,21 @@ export function ClosingScreen({ selected, onRevisit }: ClosingScreenProps) {
           <Button onClick={onRevisit} className="phone:min-w-48">
             Revisit the Journey
           </Button>
-          <Button variant="secondary" onClick={shareJourney} className="phone:min-w-48">
-            Share with a Colleague
+          <Button
+            variant={linkCopied ? "surface" : "secondary"}
+            onClick={shareJourney}
+            className="phone:min-w-48"
+          >
+            {linkCopied ? (
+              <>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4 shrink-0" aria-hidden="true">
+                  <path d="M20 6 9 17l-5-5" />
+                </svg>
+                <span>Link Copied</span>
+              </>
+            ) : (
+              <span>Share with a Colleague</span>
+            )}
           </Button>
         </div>
         <p className="mt-4 min-h-6 text-sm text-oyc-text-muted" role="status" aria-live="polite">

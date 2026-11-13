@@ -32,8 +32,20 @@ export function WelcomeScreen({ onBegin }: WelcomeScreenProps) {
           Your journey doesn&apos;t end here. <span className="text-white">The Journey Continues.</span>
         </motion.p>
         <motion.div variants={item} className="mx-auto mt-9 max-w-sm">
-          <Button fullWidth onClick={onBegin} className="rounded-full tablet:min-h-14 tablet:text-base">
-            Begin Your Journey
+          <Button fullWidth size="lg" shape="pill" onClick={onBegin} className="group">
+            <span>Begin Your Journey</span>
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5"
+              aria-hidden="true"
+            >
+              <path d="M5 12h14M13 6l6 6-6 6" />
+            </svg>
           </Button>
         </motion.div>
         <motion.p variants={item} className="mt-5 text-xs leading-5 text-oyc-text-muted/80">

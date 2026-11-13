@@ -3,6 +3,7 @@
 import { useEffect, useRef, type PointerEventHandler } from "react";
 
 interface UseStoryNavigationOptions {
+  enabled?: boolean;
   canGoPrevious: boolean;
   onPrevious: () => void;
   onNext: () => void;
@@ -23,7 +24,14 @@ function isInteractiveTarget(target: EventTarget | null) {
   );
 }
 
+function shouldIgnoreKeyNavigation(target: EventTarget | null) {
+  return target instanceof HTMLElement && Boolean(
+    target.closest("input, select, textarea, dialog, [contenteditable='true'], [aria-label='Background music controls']"),
+  );
+}
+
 export function useStoryNavigation({
+  enabled = true,
   canGoPrevious,
   onPrevious,
   onNext,
@@ -31,9 +39,11 @@ export function useStoryNavigation({
   const pointerStart = useRef<PointerPosition | null>(null);
 
   useEffect(() => {
+    if (!enabled) return;
+
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.defaultPrevented || event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
-      if (isInteractiveTarget(event.target)) return;
+      if (shouldIgnoreKeyNavigation(event.target)) return;
 
       if (event.key === "ArrowLeft" && canGoPrevious) {
         event.preventDefault();
@@ -48,10 +58,10 @@ export function useStoryNavigation({
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [canGoPrevious, onNext, onPrevious]);
+  }, [canGoPrevious, enabled, onNext, onPrevious]);
 
   const onPointerDown: PointerEventHandler<HTMLDivElement> = (event) => {
-    if (!event.isPrimary || isInteractiveTarget(event.target)) return;
+    if (!enabled || !event.isPrimary || isInteractiveTarget(event.target)) return;
 
     pointerStart.current = {
       pointerId: event.pointerId,

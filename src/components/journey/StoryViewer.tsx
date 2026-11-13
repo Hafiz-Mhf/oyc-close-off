@@ -39,6 +39,7 @@ export function StoryViewer({
   const [zoomOpen, setZoomOpen] = useState(false);
   const zoomTriggerRef = useRef<HTMLButtonElement>(null);
   const swipeHandlers = useStoryNavigation({
+    enabled: !zoomOpen,
     canGoPrevious: !isFirst,
     onPrevious,
     onNext,
@@ -61,7 +62,7 @@ export function StoryViewer({
   return (
     <div className="flex min-h-0 flex-1 flex-col px-3 pb-3 tablet:px-6 tablet:pb-6">
       <div className="flex items-center justify-between gap-3">
-        <Button variant="quiet" onClick={onBack} className="px-3">Back</Button>
+        <Button variant="quiet" size="sm" onClick={onBack}>Back</Button>
         <p className="font-mono text-sm font-semibold tracking-[0.08em] text-white" aria-hidden="true">
           {String(activeIndex + 1).padStart(2, "0")} / {String(posters.length).padStart(2, "0")}
         </p>
@@ -95,14 +96,54 @@ export function StoryViewer({
       </div>
 
       <div className="mt-2 flex justify-center">
-        <Button ref={zoomTriggerRef} variant="quiet" onClick={() => setZoomOpen(true)} className="px-4" aria-haspopup="dialog">
-          Zoom or read poster text
+        <Button
+          ref={zoomTriggerRef}
+          variant="surface"
+          size="sm"
+          shape="pill"
+          onClick={() => setZoomOpen(true)}
+          aria-haspopup="dialog"
+        >
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="h-4 w-4 shrink-0"
+            aria-hidden="true"
+          >
+            <circle cx="11" cy="11" r="7" />
+            <path d="m20 20-3.5-3.5M11 8v6M8 11h6" />
+          </svg>
+          <span>Zoom or read poster text</span>
         </Button>
       </div>
 
-      <div className="mt-3 grid grid-cols-2 gap-3 tablet:mx-auto tablet:w-full tablet:max-w-5xl">
+      <div
+        className={`mt-3 grid gap-3 tablet:mx-auto tablet:w-full tablet:max-w-5xl ${
+          isLast ? "grid-cols-[1fr_1.65fr] phone:grid-cols-2" : "grid-cols-2"
+        }`}
+      >
         <Button variant="secondary" onClick={onPrevious} disabled={isFirst}>Previous</Button>
-        <Button onClick={onNext}>{isLast ? "Continue to Reflection" : "Next"}</Button>
+        <Button onClick={onNext} className="group">
+          <span>{isLast ? "Continue to Reflection" : "Next"}</span>
+          {isLast && (
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="h-4 w-4 shrink-0 transition-transform duration-200 group-hover:translate-x-0.5"
+              aria-hidden="true"
+            >
+              <path d="M5 12h14M13 6l6 6-6 6" />
+            </svg>
+          )}
+        </Button>
       </div>
       {zoomOpen && <PosterZoomDialog poster={poster} onClose={closeZoom} />}
     </div>

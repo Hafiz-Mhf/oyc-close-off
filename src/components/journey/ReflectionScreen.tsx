@@ -38,7 +38,7 @@ export function ReflectionScreen({
 
   return (
     <div className="flex flex-1 flex-col px-5 py-6 tablet:px-12 tablet:py-10">
-      <Button variant="quiet" onClick={onBack} className="mr-auto px-3">
+      <Button variant="quiet" size="sm" onClick={onBack} className="mr-auto">
         Back to poster 7
       </Button>
       <div className="mx-auto mt-5 w-full max-w-4xl">
@@ -78,7 +78,11 @@ export function ReflectionScreen({
                     aria-hidden="true"
                     className={`mt-0.5 grid size-6 shrink-0 place-items-center rounded-full border ${isSelected ? "border-oyc-cyan bg-oyc-cyan text-oyc-navy" : "border-oyc-border"}`}
                   >
-                    {isSelected ? "✓" : ""}
+                    {isSelected && (
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="h-3.5 w-3.5">
+                        <path d="M20 6 9 17l-5-5" />
+                      </svg>
+                    )}
                   </span>
                   <span>
                     <span className="block font-bold">{option.label}</span>
@@ -103,7 +107,7 @@ export function ReflectionScreen({
           )}
         </div>
 
-        <div className="mt-3 flex flex-col gap-3 phone:flex-row phone:justify-end">
+        <div className="mt-3 flex flex-col-reverse gap-3 phone:flex-row phone:justify-end">
           <Button variant="secondary" onClick={onSkip}>
             Skip for now
           </Button>

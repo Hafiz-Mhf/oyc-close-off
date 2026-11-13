@@ -18,6 +18,7 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 /.playwright-cli/
+/.impeccable/
 .phase*-server*.log
 
 # environment files

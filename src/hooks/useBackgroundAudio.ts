@@ -38,8 +38,8 @@ export function useBackgroundAudio() {
     audio.volume = 0;
 
     const step = (now: number) => {
-      const progress = Math.min((now - startedAt) / FADE_DURATION_MS, 1);
-      audio.volume = volumeRef.current * progress;
+      const progress = Math.min(Math.max((now - startedAt) / FADE_DURATION_MS, 0), 1);
+      audio.volume = Math.min(Math.max(volumeRef.current * progress, 0), 1);
 
       if (progress < 1 && !audio.paused) {
         fadeFrameRef.current = window.requestAnimationFrame(step);

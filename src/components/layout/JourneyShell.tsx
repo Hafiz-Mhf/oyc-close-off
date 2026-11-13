@@ -29,7 +29,7 @@ export function JourneyShell({ children, screenLabel, audioControls, constrained
           <button
             type="button"
             onClick={onHome}
-            className="group inline-flex min-h-11 shrink-0 items-center rounded-xl px-1 transition-colors hover:bg-white/5"
+            className="group inline-flex min-h-11 shrink-0 cursor-pointer items-center rounded-xl px-1 transition-colors hover:bg-white/5"
             aria-label="OYC Close-Off home"
           >
             <Image

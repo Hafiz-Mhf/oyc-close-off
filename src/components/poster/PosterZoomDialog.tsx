@@ -95,11 +95,32 @@ export function PosterZoomDialog({ poster, onClose }: PosterZoomDialogProps) {
     updateScale(scale + (event.deltaY < 0 ? SCALE_STEP : -SCALE_STEP));
   };
 
+  const handleDialogKeyDown = (event: React.KeyboardEvent<HTMLDialogElement>) => {
+    if (scale <= MIN_SCALE) return;
+    if (event.target instanceof HTMLElement && event.target.closest("details")) return;
+
+    const panStep = 40;
+    if (event.key === "ArrowUp") {
+      event.preventDefault();
+      setPosition((current) => ({ x: current.x, y: current.y + panStep }));
+    } else if (event.key === "ArrowDown") {
+      event.preventDefault();
+      setPosition((current) => ({ x: current.x, y: current.y - panStep }));
+    } else if (event.key === "ArrowLeft") {
+      event.preventDefault();
+      setPosition((current) => ({ x: current.x + panStep, y: current.y }));
+    } else if (event.key === "ArrowRight") {
+      event.preventDefault();
+      setPosition((current) => ({ x: current.x - panStep, y: current.y }));
+    }
+  };
+
   return (
     <dialog
       ref={dialogRef}
       className="poster-dialog m-auto h-[calc(100dvh-1rem)] w-[calc(100vw-1rem)] max-w-6xl overflow-hidden rounded-2xl border border-oyc-border bg-oyc-navy-deep p-0 text-oyc-text shadow-2xl tablet:h-[calc(100dvh-3rem)] tablet:w-[calc(100vw-3rem)]"
       aria-labelledby="poster-dialog-title"
+      onKeyDown={handleDialogKeyDown}
       onCancel={(event) => { event.preventDefault(); onClose(); }}
       onClose={onClose}
     >
@@ -107,9 +128,9 @@ export function PosterZoomDialog({ poster, onClose }: PosterZoomDialogProps) {
         <header className="flex flex-wrap items-center justify-between gap-2 border-b border-white/10 p-3 tablet:px-5">
           <div>
             <h2 id="poster-dialog-title" className="font-bold">Poster {poster.id} of 7</h2>
-            <p className="text-xs text-oyc-text-muted">Pinch, scroll or use the controls to zoom. Drag to pan.</p>
+            <p className="text-xs text-oyc-text-muted">Pinch, scroll or use the controls to zoom. Drag or use arrow keys to pan.</p>
           </div>
-          <Button variant="quiet" onClick={onClose} className="px-3">Close zoom</Button>
+          <Button variant="quiet" size="sm" onClick={onClose}>Close zoom</Button>
         </header>
 
         <div
@@ -137,14 +158,22 @@ export function PosterZoomDialog({ poster, onClose }: PosterZoomDialogProps) {
 
         <footer className="border-t border-white/10 bg-oyc-navy p-3 tablet:px-5">
           <div className="flex flex-wrap items-center justify-center gap-2" aria-label="Poster zoom controls">
-            <Button variant="secondary" onClick={() => updateScale(scale - SCALE_STEP)} disabled={scale <= MIN_SCALE} aria-label="Zoom out">−</Button>
+            <Button variant="secondary" size="icon" onClick={() => updateScale(scale - SCALE_STEP)} disabled={scale <= MIN_SCALE} aria-label="Zoom out">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" className="h-4 w-4" aria-hidden="true">
+                <path d="M5 12h14" />
+              </svg>
+            </Button>
             <output className="min-w-16 text-center text-sm font-semibold" aria-live="polite">{Math.round(scale * 100)}%</output>
-            <Button variant="secondary" onClick={() => updateScale(scale + SCALE_STEP)} disabled={scale >= MAX_SCALE} aria-label="Zoom in">+</Button>
-            <Button variant="quiet" onClick={reset} disabled={scale === MIN_SCALE && position.x === 0 && position.y === 0}>Reset</Button>
+            <Button variant="secondary" size="icon" onClick={() => updateScale(scale + SCALE_STEP)} disabled={scale >= MAX_SCALE} aria-label="Zoom in">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" className="h-4 w-4" aria-hidden="true">
+                <path d="M12 5v14M5 12h14" />
+              </svg>
+            </Button>
+            <Button variant="quiet" size="sm" onClick={reset} disabled={scale === MIN_SCALE && position.x === 0 && position.y === 0}>Reset</Button>
           </div>
           <details className="mx-auto mt-2 max-w-3xl rounded-lg border border-white/10 bg-white/5 px-4 py-2 text-sm">
             <summary className="min-h-11 cursor-pointer py-2 font-semibold text-oyc-cyan">Read poster text</summary>
-            <div className="max-h-36 overflow-y-auto pb-2 leading-6 text-oyc-text-muted">
+            <div className="max-h-40 overflow-y-auto pb-2 leading-6 text-oyc-text-muted tablet:max-h-48">
               {poster.transcript.map((line) => <p key={line} className="mt-2 first:mt-0">{line}</p>)}
             </div>
           </details>
