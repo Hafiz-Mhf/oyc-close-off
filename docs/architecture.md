@@ -84,13 +84,15 @@ Asset extensions and paths are illustrative: adapt to the actual supplied files,
 
 ## 7. Deployment
 1. Create Next.js TypeScript project and install Tailwind; add Motion if needed.
-2. Add supplied poster assets to `/public/posters`; do not expose standalone logos because branding remains inside the posters.
+2. Add supplied poster assets to `/public/posters`; use the approved official logo in the global header and approved square emblem for browser icons.
 3. Add `public/audio/comet.mp3` and `public/audio/echo.mp3` with their attribution/licence records.
 4. Implement, test locally, and push to GitHub.
 5. Import GitHub repository into Vercel; use default Next.js framework settings.
 6. Review Vercel account plan and **organisation/commercial-use eligibility** before launch; do not assume a free personal plan is appropriate for MRANTI corporate use.
 7. Test production preview on mobile and desktop, then share approved production URL through HR channels.
 8. Optional: custom domain later; not required for MVP.
+
+Deployment steps 1–7 are complete. GitHub `main` deploys through Vercel to `https://oyc-close-off.vercel.app`.
 
 ## 8. Test matrix
 - Phone: iOS Safari, Android Chrome; swipe, Begin-triggered audio, volume/mute, image zoom, safe-area and small text.

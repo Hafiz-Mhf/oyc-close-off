@@ -31,12 +31,12 @@ Read these files before changing scope or implementation:
 
 ## Non-negotiable constraints
 - Preserve all seven approved original OYC posters unchanged. Never recreate, crop, edit, rewrite, or replace them.
-- Keep standalone logos out of the interface. The approved logos remain inside the supplied posters.
+- Use the approved official OYC logo only in the global header and the approved square emblem for browser icons. Never redraw either asset.
 - Use no database, authentication, staff tracking, submissions, analytics, or server persistence.
 - Keep music optional and user-controlled. Clicking **Begin Your Journey** starts the approved Comet/Echo playlist at 50% with a 1.5-second fade-in.
 - Keep the application responsive, keyboard accessible, and reduced-motion friendly.
-- Publish to GitHub and deploy to Vercel only after explicit approval.
+- Keep GitHub publication and Vercel deployment changes subject to explicit approval.
 
 ## Current status
 
-Phases 1–4 are complete: scaffold, welcome, seven-poster story, two-track audio, private reflection and closing/share flow. See `current-context.md` for verified status.
+Phases 1–7 are complete. The approved deployment is live at [oyc-close-off.vercel.app](https://oyc-close-off.vercel.app). See `current-context.md` for the full verification record.

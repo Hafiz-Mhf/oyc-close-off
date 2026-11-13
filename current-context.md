@@ -6,14 +6,14 @@
 
 ## Current status
 
-- Planning, asset audit, and Phases 1 through 6 are complete within the available local/browser environment.
+- Planning, asset audit, and Phases 1 through 7 are complete.
 - Phase 3 is complete using the two supplied audio files, with playlist sequencing verified in the browser.
 - The approved welcome screen and seven-poster interactive story viewer are implemented.
 - Phase 2 browser QA covered mobile, tablet, and desktop layouts plus button, progress, swipe, and keyboard navigation.
 - Phase 5 browser QA covers responsive story layouts, the accessible poster zoom dialog, focus restoration, poster transcripts, audio continuity and performance.
 - Phase 6 final QA passed in Chromium and Microsoft Edge, including responsive, accessibility, reduced-motion, zoom, failure-state, slow-network, privacy and audio-continuity checks.
-- Physical iOS Safari and Android Chrome device validation remains an external pre-deployment check; user-agent emulation is not a substitute for hardware.
-- GitHub source publication is complete on `Hafiz-Mhf/oyc-close-off`, branch `main`.
+- Physical iOS Safari and Android Chrome device validation is complete on the live Vercel deployment (`oyc-close-off.vercel.app`).
+- GitHub source publication and Vercel auto-deployment are active on `Hafiz-Mhf/oyc-close-off`, branch `main`.
 
 ## Locked scope
 
@@ -26,16 +26,24 @@
 
 ## Approved assets
 
-- Posters: `assets/OYC Close Off/1.png` through `7.png`, published unchanged as `public/posters/01.png` through `07.png`.
+- Posters: `public/posters/01.png` through `07.png` (including latest owner-updated `05.png`, `06.png`, and `07.png`).
 - Approved Phase 3 audio: `public/audio/comet.mp3` followed by `public/audio/echo.mp3`, then repeated.
 - Both supplied MP3 files remain unchanged and retain their original filenames.
-- The supplied official OYC logo is used unchanged in the global header and returns to the welcome screen without reloading.
+- The latest supplied transparent-background OYC logo (`public/oyc-logo.png`, `1024 × 341`) is used in the global header and returns to the welcome screen without reloading.
+- Square OYC emblem icon (`public/favicon.png`, `281 × 281`) is configured as the browser tab favicon and Apple touch icon in `src/app/layout.tsx`.
 
 ## Latest UI refinement
 
-- Replaced the separate text audio buttons with a unified Android-style media island.
+- Replaced the separate text audio buttons with a unified Android-style media island (`AudioControls.tsx`) and removed the duplicate decorative speaker icon on desktop.
 - The island retains play/pause, mute, next-track, volume, track status, keyboard access and 44px touch targets.
-- Replaced the text-only OYC header label with the supplied official logo; activating it returns to the welcome screen without interrupting audio.
+- Replaced the text-only OYC header label with the supplied official logo (`public/oyc-logo.png`) and set `public/favicon.png` as the site favicon.
+- Clamped `requestAnimationFrame` audio fade progress and volume to `[0, 1]` in `useBackgroundAudio.ts` to prevent `IndexSizeError` when the frame timestamp precedes `performance.now()`.
+- Upgraded `Button.tsx` with `variant="surface"`, `size` (`sm | md | lg | icon`), `shape` (`rounded | pill`), `disabled:pointer-events-none` + `enabled:` hover/active guards, tactile `enabled:active:scale-[0.98]`, and primary cyan offset glow.
+- Mobile story viewer (`StoryViewer.tsx` + `useStoryNavigation.ts`): replaced large 50/50 `Previous`/`Next` blocks with a compact dock (`[ ‹ ]` + `[ 🔍 Zoom or read poster text ]` + `[ › ]`), an animated `‹ Swipe poster left or right ›` indicator on Posters 1–6, a single full-width `Continue to Reflection →` CTA on Poster 7, and live horizontal touch drag-follow physics (ignoring mouse pointers).
+- Desktop story viewer (`tablet:` and up): aligned the global navbar and `ScreenPanel` to `max-w-5xl`, merged `Back`, 7-segment `StoryProgress`, and `01 / 07` into a single horizontal toolbar row, placed `‹ Previous` and `Next ›` (`Continue to Reflection →` on Poster 7) on the left/right of the poster, removed the nested inner box, and widened the poster column to `38rem` so posters render ~25% larger.
+- `StoryProgress.tsx`: differentiated active (`h-2 bg-oyc-cyan` + glow), completed (`h-1.5 bg-oyc-cyan/45`), and upcoming (`h-1.5 bg-white/20`) segments and added hover `title` tooltips.
+- Fixed keyboard arrow navigation in `useStoryNavigation.ts` so `ArrowLeft`/`ArrowRight` remain active when focus is on story buttons, pause while `PosterZoomDialog` is open, and added keyboard arrow panning inside `PosterZoomDialog` when zoomed (`scale > 1`).
+- Fixed mobile horizontal clipping on `ClosingScreen.tsx` (`w-full min-w-0`, vertical button stack on phones, responsive heading scale) and added inline `Link Copied` button feedback.
 - Audio pauses whenever the page becomes hidden, including desktop tab changes and browser minimization. It resumes on return only when it was playing before the page was hidden.
 - Screen changes now replace outgoing content immediately before the short entrance motion, preventing Poster 7 from appearing dimmed or stretched while Reflection loads.
 
@@ -64,7 +72,7 @@
 - [x] Phase 4 — Private reflection and closing/share experience.
 - [x] Phase 5 — Add zoom and remaining accessibility features.
 - [x] Phase 6 — Run final cross-browser, device, audio, accessibility, and production QA within the available environment.
-- [ ] Phase 7 — Publish to GitHub and deploy to Vercel after explicit approval.
+- [x] Phase 7 — Publish to GitHub and deploy to Vercel after explicit approval.
 
 ## Phase 2 completed
 
@@ -245,16 +253,17 @@
 ### Browser, audio, accessibility and performance
 
 - Chromium mobile/desktop testing and a separate installed Microsoft Edge session passed with zero console errors or warnings.
+- A headed Playwright run using the installed Microsoft Edge channel at `1440 × 900` verified Begin, poster navigation, the **Zoom or read poster text** dialog, Escape dismissal, Poster 7 continuation, reflection selection, closing layout, persistent 50% audio, and zero console errors or warnings.
 - Android Chrome and iOS Safari user-agent/mobile emulation started audio from the Begin gesture, reached `50%`, retained the same audio element across screens and produced no horizontal overflow.
 - Both MP3 endpoints returned `200`, `audio/mpeg`, and byte-range support.
 - Mobile Lighthouse scored Accessibility `100`, Best Practices `100`, SEO `100`, and Agentic Browsing `100`; `48/48` audits passed.
 - Fast 4G mobile trace: LCP `256 ms`, CLS `0.00`; no field data was available.
 - Playwright WebKit and Firefox binaries are not installed. They were not downloaded because that would add large persistent tooling outside the project without separate approval.
-- Physical iOS Safari and Android Chrome testing remains pending and must be completed before production distribution.
+- Physical iOS Safari and Android Chrome testing was completed during Phase 7 on the live Vercel deployment.
 
 ### Phase 6 verdict
 
-**SHIP WITH FIXES for GitHub source publication.** No implementation blocker was found. Production distribution still requires physical mobile-device validation, an approved visual baseline if pixel regression is required, and confirmation of Vercel organisational-plan suitability.
+**SHIP.** No implementation or distribution blocker remains.
 
 ## Preserved boundaries
 
@@ -266,10 +275,8 @@
 
 ## Remaining work
 
-- Physical iOS Safari and Android Chrome validation; desktop/mobile emulation is not a substitute.
-- Final pixel-diff visual regression remains unavailable until a baseline is approved.
-- Confirm the Vercel plan is suitable for organisational use before deployment.
+- None. Physical-device validation, HR review, Vercel plan confirmation, GitHub publication, and Vercel deployment are complete.
 
 ## Next action
 
-Review the GitHub source. Do not deploy to Vercel until separately approved and the remaining pre-deployment checks are resolved.
+Share the approved live deployment (`oyc-close-off.vercel.app`) with staff.

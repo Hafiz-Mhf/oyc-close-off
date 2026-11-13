@@ -58,9 +58,10 @@ MRANTI's Own Your Career (OYC) four-week campaign is closing. HR wants colleague
 - No database or authentication service is required.
 - Deployment works on the chosen Vercel account; organisational/commercial-use plan terms must be checked before publication.
 
-## 9. Outstanding inputs / approvals
-- Seven high-resolution final posters are supplied and their order is approved.
-- Standalone logo files are supplied but will not appear outside the posters.
-- Approved audio files are supplied as `public/audio/comet.mp3` and `public/audio/echo.mp3`. Keep the supplied filenames and verify their corporate web usage, attribution and redistribution terms before publication.
-- Welcome, closing and reflection wording is approved; the final distribution link remains pending.
-- Confirm Vercel account and plan are appropriate for organisational use.
+## 9. Completed inputs and approvals
+- Seven high-resolution final posters are supplied, ordered, approved, and published unchanged.
+- The approved official OYC logo is used in the global header; the approved square emblem is used for browser icons.
+- Approved audio files are published as `public/audio/comet.mp3` and `public/audio/echo.mp3` with their original filenames.
+- Welcome, closing, and reflection wording is approved.
+- GitHub publication, Vercel deployment, organisational-plan review, physical-device validation, and HR review are complete.
+- Approved distribution URL: `https://oyc-close-off.vercel.app`.
