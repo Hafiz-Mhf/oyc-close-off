@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, type PointerEventHandler } from "react";
+import { useEffect, useRef, useState, type PointerEventHandler } from "react";
 
 interface UseStoryNavigationOptions {
   enabled?: boolean;
@@ -13,10 +13,13 @@ interface PointerPosition {
   pointerId: number;
   x: number;
   y: number;
+  axis: "x" | "y" | null;
 }
 
-const SWIPE_THRESHOLD = 48;
-const HORIZONTAL_BIAS = 1.25;
+const SWIPE_THRESHOLD = 44;
+const AXIS_LOCK_DISTANCE = 8;
+const HORIZONTAL_BIAS = 1.2;
+const MAX_DRAG_OFFSET = 140;
 
 function isInteractiveTarget(target: EventTarget | null) {
   return target instanceof HTMLElement && Boolean(
@@ -37,6 +40,8 @@ export function useStoryNavigation({
   onNext,
 }: UseStoryNavigationOptions) {
   const pointerStart = useRef<PointerPosition | null>(null);
+  const [dragOffsetX, setDragOffsetX] = useState(0);
+  const [isDragging, setIsDragging] = useState(false);
 
   useEffect(() => {
     if (!enabled) return;
@@ -60,6 +65,12 @@ export function useStoryNavigation({
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [canGoPrevious, enabled, onNext, onPrevious]);
 
+  const resetDrag = () => {
+    pointerStart.current = null;
+    setDragOffsetX(0);
+    setIsDragging(false);
+  };
+
   const onPointerDown: PointerEventHandler<HTMLDivElement> = (event) => {
     if (!enabled || !event.isPrimary || isInteractiveTarget(event.target)) return;
 
@@ -67,12 +78,40 @@ export function useStoryNavigation({
       pointerId: event.pointerId,
       x: event.clientX,
       y: event.clientY,
+      axis: null,
     };
+  };
+
+  const onPointerMove: PointerEventHandler<HTMLDivElement> = (event) => {
+    const start = pointerStart.current;
+    if (!enabled || !start || start.pointerId !== event.pointerId) return;
+
+    const deltaX = event.clientX - start.x;
+    const deltaY = event.clientY - start.y;
+
+    if (start.axis === null) {
+      if (Math.hypot(deltaX, deltaY) < AXIS_LOCK_DISTANCE) return;
+
+      if (Math.abs(deltaX) > Math.abs(deltaY) * HORIZONTAL_BIAS) {
+        start.axis = "x";
+        setIsDragging(true);
+      } else {
+        start.axis = "y";
+        pointerStart.current = null;
+        return;
+      }
+    }
+
+    if (start.axis !== "x") return;
+
+    const resistedDelta = !canGoPrevious && deltaX > 0 ? deltaX * 0.25 : deltaX;
+    const clampedOffset = Math.max(-MAX_DRAG_OFFSET, Math.min(MAX_DRAG_OFFSET, resistedDelta));
+    setDragOffsetX(clampedOffset);
   };
 
   const onPointerUp: PointerEventHandler<HTMLDivElement> = (event) => {
     const start = pointerStart.current;
-    pointerStart.current = null;
+    resetDrag();
 
     if (!start || start.pointerId !== event.pointerId) return;
 
@@ -86,8 +125,17 @@ export function useStoryNavigation({
   };
 
   const onPointerCancel: PointerEventHandler<HTMLDivElement> = () => {
-    pointerStart.current = null;
+    resetDrag();
   };
 
-  return { onPointerDown, onPointerUp, onPointerCancel };
+  return {
+    dragOffsetX,
+    isDragging,
+    swipeHandlers: {
+      onPointerDown,
+      onPointerMove,
+      onPointerUp,
+      onPointerCancel,
+    },
+  };
 }

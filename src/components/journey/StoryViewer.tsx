@@ -38,7 +38,7 @@ export function StoryViewer({
   const reduceMotion = useReducedMotion();
   const [zoomOpen, setZoomOpen] = useState(false);
   const zoomTriggerRef = useRef<HTMLButtonElement>(null);
-  const swipeHandlers = useStoryNavigation({
+  const { dragOffsetX, isDragging, swipeHandlers } = useStoryNavigation({
     enabled: !zoomOpen,
     canGoPrevious: !isFirst,
     onPrevious,
@@ -75,7 +75,7 @@ export function StoryViewer({
       </p>
 
       <div
-        className="relative flex min-h-0 flex-1 touch-pan-y items-center justify-center overflow-hidden bg-black/20 p-2 tablet:mx-auto tablet:w-full tablet:max-w-5xl tablet:rounded-2xl tablet:border tablet:border-white/10 tablet:p-4"
+        className="relative flex min-h-0 flex-1 touch-pan-y select-none items-center justify-center overflow-hidden bg-black/20 p-2 tablet:mx-auto tablet:w-full tablet:max-w-5xl tablet:rounded-2xl tablet:border tablet:border-white/10 tablet:p-4"
         aria-label="Poster viewer. Swipe horizontally or use the navigation controls."
         {...swipeHandlers}
       >
@@ -87,49 +87,159 @@ export function StoryViewer({
             initial={reduceMotion ? false : "enter"}
             animate="center"
             exit={reduceMotion ? { opacity: 1 } : "exit"}
-            transition={{ duration: reduceMotion ? 0 : 0.3, ease: "easeOut" }}
+            transition={{ duration: reduceMotion ? 0 : 0.28, ease: "easeOut" }}
             className="flex h-full min-h-0 w-full items-center justify-center"
           >
-            <PosterImage poster={poster} priority={activeIndex === 0} />
+            <div
+              className="flex h-full min-h-0 w-full items-center justify-center"
+              style={
+                reduceMotion || dragOffsetX === 0
+                  ? undefined
+                  : {
+                      transform: `translate3d(${dragOffsetX}px, 0, 0)`,
+                      transition: isDragging ? "none" : "transform 180ms ease-out",
+                    }
+              }
+            >
+              <PosterImage poster={poster} priority={activeIndex === 0} />
+            </div>
           </motion.div>
         </AnimatePresence>
       </div>
 
-      <div className="mt-2 flex justify-center">
-        <Button
-          ref={zoomTriggerRef}
-          variant="surface"
-          size="sm"
-          shape="pill"
-          onClick={() => setZoomOpen(true)}
-          aria-haspopup="dialog"
-        >
-          <svg
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="h-4 w-4 shrink-0"
+      <div className="mt-2.5 flex flex-col gap-2 tablet:mx-auto tablet:w-full tablet:max-w-5xl">
+        <div className="flex items-center justify-between gap-2">
+          <Button
+            variant="secondary"
+            size="icon"
+            shape="pill"
+            onClick={onPrevious}
+            disabled={isFirst}
+            aria-label="Previous poster"
+            className="shrink-0 tablet:w-auto tablet:px-4"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="h-4 w-4 shrink-0"
+              aria-hidden="true"
+            >
+              <path d="m15 18-6-6 6-6" />
+            </svg>
+            <span className="hidden tablet:inline">Previous</span>
+          </Button>
+
+          <div className="flex min-w-0 flex-1 flex-col items-center">
+            <Button
+              ref={zoomTriggerRef}
+              variant="surface"
+              size="sm"
+              shape="pill"
+              onClick={() => setZoomOpen(true)}
+              aria-haspopup="dialog"
+              className="max-w-full"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="h-4 w-4 shrink-0"
+                aria-hidden="true"
+              >
+                <circle cx="11" cy="11" r="7" />
+                <path d="m20 20-3.5-3.5M11 8v6M8 11h6" />
+              </svg>
+              <span className="truncate">Zoom or read poster text</span>
+            </Button>
+          </div>
+
+          {!isLast ? (
+            <Button
+              variant="secondary"
+              size="icon"
+              shape="pill"
+              onClick={onNext}
+              aria-label="Next poster"
+              className="shrink-0 border-oyc-cyan/50 text-oyc-cyan tablet:w-auto tablet:px-4"
+            >
+              <span className="hidden tablet:inline">Next</span>
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="h-4 w-4 shrink-0"
+                aria-hidden="true"
+              >
+                <path d="m9 18 6-6-6-6" />
+              </svg>
+            </Button>
+          ) : (
+            <Button
+              onClick={onNext}
+              shape="pill"
+              size="sm"
+              className="group hidden shrink-0 tablet:inline-flex tablet:px-5"
+            >
+              <span>Continue to Reflection</span>
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="h-4 w-4 shrink-0 transition-transform duration-200 group-hover:translate-x-0.5"
+                aria-hidden="true"
+              >
+                <path d="M5 12h14M13 6l6 6-6 6" />
+              </svg>
+            </Button>
+          )}
+        </div>
+
+        {!isLast ? (
+          <p
+            className="flex items-center justify-center gap-1.5 text-[0.7rem] font-medium tracking-[0.06em] text-oyc-text-muted/75 tablet:hidden"
             aria-hidden="true"
           >
-            <circle cx="11" cy="11" r="7" />
-            <path d="m20 20-3.5-3.5M11 8v6M8 11h6" />
-          </svg>
-          <span>Zoom or read poster text</span>
-        </Button>
-      </div>
-
-      <div
-        className={`mt-3 grid gap-3 tablet:mx-auto tablet:w-full tablet:max-w-5xl ${
-          isLast ? "grid-cols-[1fr_1.65fr] phone:grid-cols-2" : "grid-cols-2"
-        }`}
-      >
-        <Button variant="secondary" onClick={onPrevious} disabled={isFirst}>Previous</Button>
-        <Button onClick={onNext} className="group">
-          <span>{isLast ? "Continue to Reflection" : "Next"}</span>
-          {isLast && (
+            <motion.span
+              animate={reduceMotion ? undefined : { x: [0, -3, 0] }}
+              transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
+              className="inline-flex text-oyc-cyan/80"
+            >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" className="h-3 w-3">
+                <path d="m15 18-6-6 6-6" />
+              </svg>
+            </motion.span>
+            <span>Swipe poster left or right</span>
+            <motion.span
+              animate={reduceMotion ? undefined : { x: [0, 3, 0] }}
+              transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
+              className="inline-flex text-oyc-cyan/80"
+            >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" className="h-3 w-3">
+                <path d="m9 18 6-6-6-6" />
+              </svg>
+            </motion.span>
+          </p>
+        ) : (
+          <Button
+            fullWidth
+            shape="pill"
+            onClick={onNext}
+            className="group tablet:hidden"
+          >
+            <span>Continue to Reflection</span>
             <svg
               viewBox="0 0 24 24"
               fill="none"
@@ -142,8 +252,8 @@ export function StoryViewer({
             >
               <path d="M5 12h14M13 6l6 6-6 6" />
             </svg>
-          )}
-        </Button>
+          </Button>
+        )}
       </div>
       {zoomOpen && <PosterZoomDialog poster={poster} onClose={closeZoom} />}
     </div>
