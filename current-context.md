@@ -36,7 +36,8 @@
 - Replaced the separate text audio buttons with a unified Android-style media island.
 - The island retains play/pause, mute, next-track, volume, track status, keyboard access and 44px touch targets.
 - Replaced the text-only OYC header label with the supplied official logo; activating it returns to the welcome screen without interrupting audio.
-- Audio pauses whenever the page becomes hidden, including desktop tab changes and browser minimization. Returning to the page does not restart playback automatically.
+- Audio pauses whenever the page becomes hidden, including desktop tab changes and browser minimization. It resumes on return only when it was playing before the page was hidden.
+- Screen changes now replace outgoing content immediately before the short entrance motion, preventing Poster 7 from appearing dimmed or stretched while Reflection loads.
 
 ## Approved interaction decisions
 
@@ -50,7 +51,7 @@
 - One persistent audio element plays Comet → Echo → Comet across story, reflection, closing and revisit transitions.
 - Play/pause, mute/unmute, next-track and 0% to 100% volume controls remain visible on mobile and desktop.
 - User pause or mute intent is never overridden by later navigation or another Begin action.
-- Backgrounding the page is treated as a pause; playback resumes only through the visible Play control.
+- Backgrounding temporarily pauses active playback and resumes it when the page becomes visible; audio that was already manually paused remains paused.
 
 ## Phase checklist
 

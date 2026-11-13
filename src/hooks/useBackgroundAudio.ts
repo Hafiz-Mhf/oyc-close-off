@@ -15,6 +15,7 @@ export function useBackgroundAudio() {
   const startAttemptedRef = useRef(false);
   const hasPlayedRef = useRef(false);
   const resumeAfterTrackChangeRef = useRef<boolean | null>(null);
+  const resumeWhenVisibleRef = useRef(false);
   const [trackIndex, setTrackIndex] = useState(0);
   const [playing, setPlaying] = useState(false);
   const [muted, setMuted] = useState(false);
@@ -158,13 +159,21 @@ export function useBackgroundAudio() {
   }, [play, trackIndex]);
 
   useEffect(() => {
-    const pauseWhenPageIsHidden = () => {
-      if (document.visibilityState !== "hidden") return;
-
+    const handleVisibilityChange = () => {
       const audio = audioRef.current;
-      if (!audio || audio.paused) return;
+      if (!audio) return;
 
-      userPausedRef.current = true;
+      if (document.visibilityState === "visible") {
+        if (!resumeWhenVisibleRef.current) return;
+
+        resumeWhenVisibleRef.current = false;
+        void play(false);
+        return;
+      }
+
+      if (document.visibilityState !== "hidden" || audio.paused) return;
+
+      resumeWhenVisibleRef.current = true;
       resumeAfterTrackChangeRef.current = false;
       cancelFade();
       audio.volume = volumeRef.current;
@@ -172,9 +181,9 @@ export function useBackgroundAudio() {
       setPlaying(false);
     };
 
-    document.addEventListener("visibilitychange", pauseWhenPageIsHidden);
-    return () => document.removeEventListener("visibilitychange", pauseWhenPageIsHidden);
-  }, [cancelFade]);
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    return () => document.removeEventListener("visibilitychange", handleVisibilityChange);
+  }, [cancelFade, play]);
 
   useEffect(() => cancelFade, [cancelFade]);
 

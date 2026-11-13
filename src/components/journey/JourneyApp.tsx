@@ -1,6 +1,6 @@
 "use client";
 
-import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { motion, useReducedMotion } from "motion/react";
 import { useState } from "react";
 import { AudioControls } from "@/components/audio/AudioControls";
 import { JourneyShell } from "@/components/layout/JourneyShell";
@@ -109,15 +109,13 @@ export function JourneyApp() {
         onError={handleAudioError}
       />
       <ScreenPanel immersive={screen === "story"}>
-        <AnimatePresence mode="wait" initial={false}>
-          <motion.div
-            key={screen}
-            className="flex min-h-0 flex-1 flex-col"
-            initial={reduceMotion ? false : { opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={reduceMotion ? { opacity: 1 } : { opacity: 0, y: -8 }}
-            transition={{ duration: reduceMotion ? 0 : screen === "closing" ? 0.6 : 0.32, ease: "easeOut" }}
-          >
+        <motion.div
+          key={screen}
+          className="flex min-h-0 flex-1 flex-col"
+          initial={reduceMotion ? false : { opacity: 0.96, y: 4 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: reduceMotion ? 0 : screen === "closing" ? 0.4 : 0.18, ease: "easeOut" }}
+        >
             {screen === "welcome" && (
               <WelcomeScreen
                 onBegin={() => {
@@ -160,8 +158,7 @@ export function JourneyApp() {
             {screen === "closing" && (
               <ClosingScreen selected={reflection} onRevisit={revisitJourney} />
             )}
-          </motion.div>
-        </AnimatePresence>
+        </motion.div>
       </ScreenPanel>
     </JourneyShell>
   );
