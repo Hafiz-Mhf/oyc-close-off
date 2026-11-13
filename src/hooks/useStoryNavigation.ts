@@ -72,7 +72,7 @@ export function useStoryNavigation({
   };
 
   const onPointerDown: PointerEventHandler<HTMLDivElement> = (event) => {
-    if (!enabled || !event.isPrimary || isInteractiveTarget(event.target)) return;
+    if (!enabled || !event.isPrimary || event.pointerType === "mouse" || isInteractiveTarget(event.target)) return;
 
     pointerStart.current = {
       pointerId: event.pointerId,

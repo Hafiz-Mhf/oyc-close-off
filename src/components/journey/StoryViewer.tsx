@@ -60,25 +60,32 @@ export function StoryViewer({
   };
 
   return (
-    <div className="flex min-h-0 flex-1 flex-col px-3 pb-3 tablet:px-6 tablet:pt-1 tablet:pb-3">
-      <div className="tablet:mx-auto tablet:w-full tablet:max-w-xl">
-        <div className="flex items-center justify-between gap-3">
-          <Button variant="quiet" size="sm" onClick={onBack}>Back</Button>
-          <p className="font-mono text-sm font-semibold tracking-[0.08em] text-white" aria-hidden="true">
+    <div className="flex min-h-0 flex-1 flex-col px-3 pb-3 tablet:px-6 tablet:pt-1.5 tablet:pb-3">
+      <div className="tablet:mx-auto tablet:grid tablet:w-full tablet:max-w-3xl tablet:grid-cols-[auto_1fr_auto] tablet:items-center tablet:gap-4">
+        <div className="flex items-center justify-between gap-3 tablet:contents">
+          <Button variant="quiet" size="sm" onClick={onBack} className="tablet:col-start-1 tablet:row-start-1">
+            Back
+          </Button>
+          <p
+            className="font-mono text-sm font-semibold tracking-[0.08em] text-white tablet:col-start-3 tablet:row-start-1"
+            aria-hidden="true"
+          >
             {String(activeIndex + 1).padStart(2, "0")} / {String(posters.length).padStart(2, "0")}
           </p>
         </div>
 
-        <StoryProgress activeIndex={activeIndex} onSelect={onSelectPoster} />
+        <div className="tablet:col-start-2 tablet:row-start-1">
+          <StoryProgress activeIndex={activeIndex} onSelect={onSelectPoster} />
+        </div>
       </div>
 
       <p className="sr-only" aria-live="polite" aria-atomic="true">
         Showing poster {activeIndex + 1} of {posters.length}: {poster.title}
       </p>
 
-      <div className="flex min-h-0 flex-1 flex-col tablet:mt-1 tablet:grid tablet:grid-cols-[1fr_minmax(0,30rem)_1fr] tablet:grid-rows-[minmax(0,1fr)_auto] tablet:items-center tablet:gap-x-4 tablet:gap-y-2">
+      <div className="flex min-h-0 flex-1 flex-col tablet:mt-1 tablet:grid tablet:grid-cols-[1fr_minmax(0,38rem)_1fr] tablet:grid-rows-[minmax(0,1fr)_auto] tablet:items-center tablet:gap-x-4 tablet:gap-y-2">
         <div
-          className="relative flex min-h-0 flex-1 touch-pan-y select-none items-center justify-center overflow-hidden bg-black/20 p-2 tablet:col-start-2 tablet:row-start-1 tablet:h-full tablet:w-full tablet:bg-transparent tablet:p-1"
+          className="relative flex min-h-0 flex-1 touch-pan-y select-none items-center justify-center overflow-hidden bg-black/20 p-2 tablet:col-start-2 tablet:row-start-1 tablet:h-full tablet:w-full tablet:overflow-visible tablet:bg-transparent tablet:p-1"
           aria-label="Poster viewer. Swipe horizontally or use the navigation controls."
           {...swipeHandlers}
         >
@@ -119,6 +126,7 @@ export function StoryViewer({
               onClick={onPrevious}
               disabled={isFirst}
               aria-label="Previous poster"
+              title="Previous poster (Left Arrow)"
               className="shrink-0 tablet:col-start-1 tablet:row-start-1 tablet:justify-self-end tablet:w-auto tablet:px-4"
             >
               <svg
@@ -170,6 +178,7 @@ export function StoryViewer({
                 shape="pill"
                 onClick={onNext}
                 aria-label="Next poster"
+                title="Next poster (Right Arrow)"
                 className="shrink-0 border-oyc-cyan/50 text-oyc-cyan tablet:col-start-3 tablet:row-start-1 tablet:justify-self-start tablet:w-auto tablet:px-4"
               >
                 <span className="hidden tablet:inline">Next</span>

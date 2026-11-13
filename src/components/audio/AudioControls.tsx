@@ -72,8 +72,7 @@ export function AudioControls({
         >
           <svg viewBox="0 0 24 24" fill="currentColor" className={iconClass} aria-hidden="true"><path d="m5 5 9 7-9 7zm10 0h3v14h-3z"/></svg>
         </button>
-        <label className="flex min-h-11 items-center gap-2 px-1 text-[0.6875rem] font-semibold text-oyc-text-muted">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="hidden h-4 w-4 tablet:block" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4zM15 9.5a4 4 0 0 1 0 5M18 7a7 7 0 0 1 0 10"/></svg>
+        <label className="flex min-h-11 items-center gap-2 px-1.5 text-[0.6875rem] font-semibold text-oyc-text-muted">
           <span className="sr-only">Volume</span>
           <input
             type="range"
@@ -85,7 +84,7 @@ export function AudioControls({
             className="island-range h-11 w-14 cursor-pointer accent-oyc-cyan phone:w-16 tablet:w-20"
             aria-valuetext={`${volumePercent}%`}
           />
-          <span className="hidden min-w-7 text-right text-[0.625rem] tablet:inline">{volumePercent}%</span>
+          <span className="hidden min-w-7 text-right text-xs tablet:inline">{volumePercent}%</span>
         </label>
       </div>
 
