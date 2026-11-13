@@ -13,6 +13,7 @@
 - Phase 5 browser QA covers responsive story layouts, the accessible poster zoom dialog, focus restoration, poster transcripts, audio continuity and performance.
 - Phase 6 final QA passed in Chromium and Microsoft Edge, including responsive, accessibility, reduced-motion, zoom, failure-state, slow-network, privacy and audio-continuity checks.
 - Physical iOS Safari and Android Chrome device validation remains an external pre-deployment check; user-agent emulation is not a substitute for hardware.
+- GitHub source publication is complete on `Hafiz-Mhf/oyc-close-off`, branch `main`.
 
 ## Locked scope
 
@@ -262,4 +263,4 @@
 
 ## Next action
 
-Push the reviewed source to GitHub. Do not deploy to Vercel until separately approved and the remaining pre-deployment checks are resolved.
+Review the GitHub source. Do not deploy to Vercel until separately approved and the remaining pre-deployment checks are resolved.

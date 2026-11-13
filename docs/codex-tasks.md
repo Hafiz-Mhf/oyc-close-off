@@ -51,7 +51,8 @@ Read `README.md`, `project.md`, `experience.md`, `design.md`, `ui-ux.md` and `ar
 - [x] Verify there are no database calls, tracking SDKs or personal-data submissions.
 
 ## Phase 7 – Publication
-- [ ] Push to GitHub and deploy on approved Vercel plan.
+- [x] Push the Phase 6-complete source to GitHub.
+- [ ] Deploy on an approved Vercel plan.
 - [ ] Review live URL with HR before sharing to staff.
 
 ## Definition of done
