@@ -184,26 +184,7 @@ export function StoryViewer({
               </svg>
             </Button>
           ) : (
-            <Button
-              onClick={onNext}
-              shape="pill"
-              size="sm"
-              className="group hidden shrink-0 tablet:inline-flex tablet:px-5"
-            >
-              <span>Continue to Reflection</span>
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2.2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="h-4 w-4 shrink-0 transition-transform duration-200 group-hover:translate-x-0.5"
-                aria-hidden="true"
-              >
-                <path d="M5 12h14M13 6l6 6-6 6" />
-              </svg>
-            </Button>
+            <span className="w-11 shrink-0 tablet:w-24" aria-hidden="true" />
           )}
         </div>
 
@@ -233,26 +214,28 @@ export function StoryViewer({
             </motion.span>
           </p>
         ) : (
-          <Button
-            fullWidth
-            shape="pill"
-            onClick={onNext}
-            className="group tablet:hidden"
-          >
-            <span>Continue to Reflection</span>
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2.2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="h-4 w-4 shrink-0 transition-transform duration-200 group-hover:translate-x-0.5"
-              aria-hidden="true"
+          <div className="flex justify-center">
+            <Button
+              fullWidth
+              shape="pill"
+              onClick={onNext}
+              className="group tablet:w-auto tablet:min-w-72"
             >
-              <path d="M5 12h14M13 6l6 6-6 6" />
-            </svg>
-          </Button>
+              <span>Continue to Reflection</span>
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="h-4 w-4 shrink-0 transition-transform duration-200 group-hover:translate-x-0.5"
+                aria-hidden="true"
+              >
+                <path d="M5 12h14M13 6l6 6-6 6" />
+              </svg>
+            </Button>
+          </div>
         )}
       </div>
       {zoomOpen && <PosterZoomDialog poster={poster} onClose={closeZoom} />}
