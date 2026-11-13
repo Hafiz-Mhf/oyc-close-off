@@ -40,7 +40,7 @@ export function JourneyShell({ children, screenLabel, audioControls, constrained
               src="/oyc-logo.png"
               alt="Own Your Career"
               width={156}
-              height={56}
+              height={52}
               priority
               className="h-auto w-[6.75rem] transition-transform duration-200 group-hover:scale-[1.03] tablet:w-[8.25rem]"
             />

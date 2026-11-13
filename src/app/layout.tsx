@@ -6,7 +6,11 @@ export const metadata: Metadata = {
   title: "OYC: The Journey Continues",
   description:
     "A reflective close-off journey for MRANTI's Own Your Career campaign.",
-  icons: { icon: "data:," },
+  icons: {
+    icon: "/favicon.png",
+    shortcut: "/favicon.png",
+    apple: "/favicon.png",
+  },
 };
 
 export const viewport: Viewport = {
