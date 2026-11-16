@@ -14,6 +14,7 @@
 - Phase 6 final QA passed in Chromium and Microsoft Edge, including responsive, accessibility, reduced-motion, zoom, failure-state, slow-network, privacy and audio-continuity checks.
 - Physical iOS Safari and Android Chrome device validation is complete on the live Vercel deployment (`oyc-close-off.vercel.app`).
 - GitHub source publication and Vercel auto-deployment are active on `Hafiz-Mhf/oyc-close-off`, branch `main`.
+- The latest published update refreshes all seven poster PNGs; each source/public pair is byte-identical and remains `1200 x 1500`.
 
 ## Locked scope
 
@@ -26,13 +27,15 @@
 
 ## Approved assets
 
-- Posters: `public/posters/01.png` through `07.png` (including latest owner-updated `05.png`, `06.png`, and `07.png`).
+- Posters: `public/posters/01.png` through `07.png` (latest owner-supplied versions of all seven posters).
 - Approved Phase 3 audio: `public/audio/comet.mp3` followed by `public/audio/echo.mp3`, then repeated.
 - Both supplied MP3 files remain unchanged and retain their original filenames.
 - The latest supplied transparent-background OYC logo (`public/oyc-logo.png`, `1024 × 341`) is used in the global header and returns to the welcome screen without reloading.
 - Square OYC emblem icon (`public/favicon.png`, `281 × 281`) is configured as the browser tab favicon and Apple touch icon in `src/app/layout.tsx`.
 
 ## Latest UI refinement
+
+- Refreshed all seven approved poster images in both `assets/OYC Close Off/` and `public/posters/`; SHA-256 comparison confirms every mirrored pair is identical, and all images retain the `1200 x 1500` portrait dimensions expected by the viewer.
 
 - Replaced the separate text audio buttons with a unified Android-style media island (`AudioControls.tsx`) and removed the duplicate decorative speaker icon on desktop.
 - The island retains play/pause, mute, next-track, volume, track status, keyboard access and 44px touch targets.
