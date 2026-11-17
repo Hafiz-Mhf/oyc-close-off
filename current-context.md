@@ -41,6 +41,7 @@
 - Language switching keeps the current poster number, progress, reflection selection and audio state while changing the poster, transcript, supporting controls, reflection and closing copy.
 - Added Bahasa Melayu accessible poster titles, alt text and transcripts alongside the owner-supplied BM artwork.
 - Refined the approved bilingual helper copy for language switching and music controls, and updated the closing headline to **Four weeks are up. Your real impact starts now.** / **Empat minggu telah berlalu. Impak sebenar anda bermula sekarang.**
+- Updated the Welcome subheadline to **It doesn't end here. Keep the momentum going.** / **Ia tidak terhenti di sini. Teruskan langkah anda.**
 - Refreshed the owner-supplied BM artwork for Posters 1, 3, and 7 while preserving their existing filenames and intrinsic dimensions.
 
 - Replaced the separate text audio buttons with a unified Android-style media island (`AudioControls.tsx`) and removed the duplicate decorative speaker icon on desktop.
