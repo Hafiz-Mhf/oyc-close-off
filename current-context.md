@@ -40,6 +40,7 @@
 - Added a clear full-name language choice on Welcome and a compact persistent `EN | BM` switch on the rest of the journey.
 - Language switching keeps the current poster number, progress, reflection selection and audio state while changing the poster, transcript, supporting controls, reflection and closing copy.
 - Added Bahasa Melayu accessible poster titles, alt text and transcripts alongside the owner-supplied BM artwork.
+- Refined the approved bilingual helper copy for language switching and music controls, and updated the closing headline to **Four weeks are up. Your real impact starts now.** / **Empat minggu telah berlalu. Impak sebenar anda bermula sekarang.**
 
 - Replaced the separate text audio buttons with a unified Android-style media island (`AudioControls.tsx`) and removed the duplicate decorative speaker icon on desktop.
 - The island retains play/pause, mute, next-track, volume, track status, keyboard access and 44px touch targets.
