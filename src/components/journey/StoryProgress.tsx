@@ -1,24 +1,28 @@
-import { posters } from "@/data/posters";
+import { copy } from "@/data/copy";
+import type { Language, Poster } from "@/types/journey";
 
 interface StoryProgressProps {
+  language: Language;
+  posters: readonly Poster[];
   activeIndex: number;
   onSelect: (index: number) => void;
 }
 
-export function StoryProgress({ activeIndex, onSelect }: StoryProgressProps) {
+export function StoryProgress({ language, posters, activeIndex, onSelect }: StoryProgressProps) {
+  const text = copy[language];
   return (
-    <ol className="grid grid-cols-7 gap-1" aria-label="Journey progress">
+    <ol className="grid grid-cols-7 gap-1" aria-label={text.journeyProgress}>
       {posters.map((poster, index) => {
-        const status = index < activeIndex ? "previous" : index === activeIndex ? "current" : "upcoming";
+        const status = index < activeIndex ? text.previousStatus : index === activeIndex ? text.current : text.upcoming;
 
         return (
           <li key={poster.id}>
             <button
               type="button"
               onClick={() => onSelect(index)}
-              title={`Poster ${poster.id}: ${poster.title}`}
+              title={`${text.poster} ${poster.id}: ${poster.title}`}
               className="group flex min-h-11 w-full cursor-pointer items-center rounded-md focus-visible:outline-offset-1"
-              aria-label={`Poster ${poster.id}: ${poster.title}, ${status}`}
+              aria-label={`${text.poster} ${poster.id}: ${poster.title}, ${status}`}
               aria-current={index === activeIndex ? "step" : undefined}
             >
               <span

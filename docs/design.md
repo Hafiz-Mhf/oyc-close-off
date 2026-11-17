@@ -34,6 +34,7 @@
 - Title: **“4 Weeks. One Journey. Endless Possibilities.”**
 - Support line: **“Your journey doesn't end here.”**
 - Primary CTA: **Begin Your Journey**.
+- Present an explicit English/Bahasa Melayu choice before the CTA, using full language names and a short note that the choice can be changed later.
 - **Begin Your Journey** starts optional music at 50% with a 1.5-second fade-in. Do not add a separate enable step.
 
 ### Story viewer
@@ -43,6 +44,7 @@
 - **Zoom** control for small text.
 - Mobile: near-full-height poster with header/footer controls; desktop: centered framed poster with balanced side margins.
 - Preserve poster visual fidelity; no text or decorative overlays across image content.
+- Keep a compact `EN | BM` control visible outside the poster. Switching language must retain the current poster number, audio state and journey progress.
 
 ### Reflection
 - One prompt, four large tappable choice cards, clear Skip option.

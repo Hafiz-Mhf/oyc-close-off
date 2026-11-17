@@ -1,6 +1,10 @@
 "use client";
 
+import { copy } from "@/data/copy";
+import type { Language } from "@/types/journey";
+
 interface AudioControlsProps {
+  language: Language;
   trackTitle: string;
   playing: boolean;
   muted: boolean;
@@ -13,6 +17,7 @@ interface AudioControlsProps {
 }
 
 export function AudioControls({
+  language,
   trackTitle,
   playing,
   muted,
@@ -23,18 +28,19 @@ export function AudioControls({
   onSkipTrack,
   onVolumeChange,
 }: AudioControlsProps) {
+  const text = copy[language];
   const volumePercent = Math.round(volume * 100);
   const iconClass = "h-4 w-4";
 
   return (
-    <div className="flex max-w-[14.5rem] flex-col items-end gap-1.5 tablet:max-w-none" aria-label="Background music controls">
+    <div className="flex max-w-[14.5rem] flex-col items-end gap-1.5 tablet:max-w-none" aria-label={text.musicControls}>
       <div className="media-island flex min-h-14 max-w-full items-center gap-1 rounded-[1.25rem] border border-white/10 bg-oyc-navy-deep/90 p-1.5 shadow-2xl shadow-black/35 backdrop-blur-xl tablet:gap-2 tablet:rounded-full tablet:pr-4">
         <div className="hidden min-w-0 items-center gap-2.5 border-r border-white/10 px-2 tablet:flex">
           <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-oyc-cyan/15 text-oyc-cyan" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="h-4 w-4"><path d="M9 18V5l10-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="16" cy="16" r="3"/></svg>
           </span>
           <span className="min-w-0 max-w-40">
-            <span className="block text-[0.6rem] font-bold tracking-[0.15em] text-oyc-cyan uppercase">Now playing</span>
+            <span className="block text-[0.6rem] font-bold tracking-[0.15em] text-oyc-cyan uppercase">{text.nowPlaying}</span>
             <span className="block truncate text-xs font-medium text-white">{trackTitle}</span>
           </span>
         </div>
@@ -42,7 +48,7 @@ export function AudioControls({
           type="button"
           onClick={onTogglePlayback}
           className="island-button"
-          aria-label={playing ? "Pause background music" : "Play background music"}
+          aria-label={playing ? text.pauseMusic : text.playMusic}
           aria-pressed={playing}
         >
           {playing ? (
@@ -55,7 +61,7 @@ export function AudioControls({
           type="button"
           onClick={onToggleMute}
           className="island-button"
-          aria-label={muted ? "Unmute background music" : "Mute background music"}
+          aria-label={muted ? text.unmuteMusic : text.muteMusic}
           aria-pressed={muted}
         >
           {muted ? (
@@ -68,12 +74,12 @@ export function AudioControls({
           type="button"
           onClick={onSkipTrack}
           className="island-button"
-          aria-label={`Skip ${trackTitle} and play the next track`}
+          aria-label={`${text.nextTrack} ${trackTitle}`}
         >
           <svg viewBox="0 0 24 24" fill="currentColor" className={iconClass} aria-hidden="true"><path d="m5 5 9 7-9 7zm10 0h3v14h-3z"/></svg>
         </button>
         <label className="flex min-h-11 items-center gap-2 px-1.5 text-[0.6875rem] font-semibold text-oyc-text-muted">
-          <span className="sr-only">Volume</span>
+          <span className="sr-only">{text.volume}</span>
           <input
             type="range"
             min="0"
@@ -89,8 +95,8 @@ export function AudioControls({
       </div>
 
       <span className="sr-only" aria-live="polite">
-        {trackTitle}. {playing ? "Background music playing." : "Background music paused."} Volume {volumePercent}%.
-        {muted ? " Muted." : ""}
+        {trackTitle}. {playing ? text.musicPlaying : text.musicPaused} {text.volume} {volumePercent}%.
+        {muted ? ` ${text.muted}` : ""}
       </span>
 
       {error && (

@@ -14,7 +14,7 @@
 - Phase 6 final QA passed in Chromium and Microsoft Edge, including responsive, accessibility, reduced-motion, zoom, failure-state, slow-network, privacy and audio-continuity checks.
 - Physical iOS Safari and Android Chrome device validation is complete on the live Vercel deployment (`oyc-close-off.vercel.app`).
 - GitHub source publication and Vercel auto-deployment are active on `Hafiz-Mhf/oyc-close-off`, branch `main`.
-- The latest published update refreshes all seven poster PNGs; each source/public pair is byte-identical and remains `1200 x 1500`.
+- The latest source update publishes owner-supplied English and Bahasa Melayu poster sets plus bilingual journey controls on GitHub `main`.
 
 ## Locked scope
 
@@ -27,7 +27,9 @@
 
 ## Approved assets
 
-- Posters: `public/posters/01.png` through `07.png` (latest owner-supplied versions of all seven posters).
+- English posters: `public/posters/eng/01.png` through `07.png`.
+- Bahasa Melayu posters: `public/posters/bm/01.png` through `07.png`.
+- Both owner-supplied sets remain unchanged; the metadata records each file's actual intrinsic dimensions.
 - Approved Phase 3 audio: `public/audio/comet.mp3` followed by `public/audio/echo.mp3`, then repeated.
 - Both supplied MP3 files remain unchanged and retain their original filenames.
 - The latest supplied transparent-background OYC logo (`public/oyc-logo.png`, `1024 × 341`) is used in the global header and returns to the welcome screen without reloading.
@@ -35,7 +37,9 @@
 
 ## Latest UI refinement
 
-- Refreshed all seven approved poster images in both `assets/OYC Close Off/` and `public/posters/`; SHA-256 comparison confirms every mirrored pair is identical, and all images retain the `1200 x 1500` portrait dimensions expected by the viewer.
+- Added a clear full-name language choice on Welcome and a compact persistent `EN | BM` switch on the rest of the journey.
+- Language switching keeps the current poster number, progress, reflection selection and audio state while changing the poster, transcript, supporting controls, reflection and closing copy.
+- Added Bahasa Melayu accessible poster titles, alt text and transcripts alongside the owner-supplied BM artwork.
 
 - Replaced the separate text audio buttons with a unified Android-style media island (`AudioControls.tsx`) and removed the duplicate decorative speaker icon on desktop.
 - The island retains play/pause, mute, next-track, volume, track status, keyboard access and 44px touch targets.
@@ -276,10 +280,19 @@
 - No backend, API, database, authentication, analytics, or tracking was added.
 - No poster or audio source file was edited.
 
+## Bilingual update verification
+
+- `npm.cmd run typecheck`, `npm.cmd run lint`, `npm.cmd run build`, and `git diff --check` passed locally.
+- Mobile browser QA at `375 x 667` verified English/BM selection on Welcome, same-poster language switching, BM next navigation, BM zoom and transcript, reflection, closing, revisit, and `html lang="ms"`.
+- Mobile body and root widths both remained exactly `375px`; the first QA pass found and the implementation fixed an overlapping mobile header hit area between the language switch and audio island.
+- Desktop browser QA at `1440 x 900` verified Arrow Right navigation, keyboard Space activation of the BM switch, same-index BM poster replacement, and no horizontal overflow.
+- Final browser console inspection showed zero errors and zero warnings. No committed visual-regression baseline exists, so automated pixel-diff status remains inconclusive.
+- Windows Computer Use initialization was unavailable due a sandbox helper error; the verified click-through used the installed Playwright CLI against the local production build.
+
 ## Remaining work
 
-- None. Physical-device validation, HR review, Vercel plan confirmation, GitHub publication, and Vercel deployment are complete.
+- Verify the automatic Vercel deployment after GitHub finishes building the new `main` commit.
 
 ## Next action
 
-Share the approved live deployment (`oyc-close-off.vercel.app`) with staff.
+Confirm the bilingual journey on the live Vercel deployment, then share the updated link with staff.

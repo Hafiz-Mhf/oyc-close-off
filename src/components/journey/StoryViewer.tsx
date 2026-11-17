@@ -5,11 +5,14 @@ import { useEffect, useRef, useState } from "react";
 import { PosterImage } from "@/components/poster/PosterImage";
 import { PosterZoomDialog } from "@/components/poster/PosterZoomDialog";
 import { Button } from "@/components/ui/Button";
-import { posters } from "@/data/posters";
+import { copy } from "@/data/copy";
 import { useStoryNavigation } from "@/hooks/useStoryNavigation";
 import { StoryProgress } from "@/components/journey/StoryProgress";
+import type { Language, Poster } from "@/types/journey";
 
 interface StoryViewerProps {
+  language: Language;
+  posters: readonly Poster[];
   activeIndex: number;
   direction: -1 | 1;
   onBack: () => void;
@@ -25,6 +28,8 @@ const posterVariants = {
 };
 
 export function StoryViewer({
+  language,
+  posters,
   activeIndex,
   direction,
   onBack,
@@ -32,6 +37,7 @@ export function StoryViewer({
   onNext,
   onSelectPoster,
 }: StoryViewerProps) {
+  const text = copy[language];
   const poster = posters[activeIndex];
   const isFirst = activeIndex === 0;
   const isLast = activeIndex === posters.length - 1;
@@ -52,7 +58,7 @@ export function StoryViewer({
         image.src = nearbyPoster.src;
       }
     });
-  }, [activeIndex]);
+  }, [activeIndex, posters]);
 
   const closeZoom = () => {
     setZoomOpen(false);
@@ -64,7 +70,7 @@ export function StoryViewer({
       <div className="tablet:mx-auto tablet:grid tablet:w-full tablet:max-w-3xl tablet:grid-cols-[auto_1fr_auto] tablet:items-center tablet:gap-4">
         <div className="flex items-center justify-between gap-3 tablet:contents">
           <Button variant="quiet" size="sm" onClick={onBack} className="tablet:col-start-1 tablet:row-start-1">
-            Back
+            {text.back}
           </Button>
           <p
             className="font-mono text-sm font-semibold tracking-[0.08em] text-white tablet:col-start-3 tablet:row-start-1"
@@ -75,23 +81,23 @@ export function StoryViewer({
         </div>
 
         <div className="tablet:col-start-2 tablet:row-start-1">
-          <StoryProgress activeIndex={activeIndex} onSelect={onSelectPoster} />
+          <StoryProgress language={language} posters={posters} activeIndex={activeIndex} onSelect={onSelectPoster} />
         </div>
       </div>
 
       <p className="sr-only" aria-live="polite" aria-atomic="true">
-        Showing poster {activeIndex + 1} of {posters.length}: {poster.title}
+        {text.showingPoster} {activeIndex + 1} {text.of} {posters.length}: {poster.title}
       </p>
 
       <div className="flex min-h-0 flex-1 flex-col tablet:mt-1 tablet:grid tablet:grid-cols-[1fr_minmax(0,38rem)_1fr] tablet:grid-rows-[minmax(0,1fr)_auto] tablet:items-center tablet:gap-x-4 tablet:gap-y-2">
         <div
           className="relative flex min-h-0 flex-1 touch-pan-y select-none items-center justify-center overflow-hidden bg-black/20 p-2 tablet:col-start-2 tablet:row-start-1 tablet:h-full tablet:w-full tablet:overflow-visible tablet:bg-transparent tablet:p-1"
-          aria-label="Poster viewer. Swipe horizontally or use the navigation controls."
+          aria-label={text.viewerLabel}
           {...swipeHandlers}
         >
           <AnimatePresence initial={false} mode="wait" custom={direction}>
             <motion.div
-              key={poster.id}
+              key={poster.src}
               custom={direction}
               variants={posterVariants}
               initial={reduceMotion ? false : "enter"}
@@ -111,7 +117,7 @@ export function StoryViewer({
                       }
                 }
               >
-                <PosterImage poster={poster} priority={activeIndex === 0} />
+                <PosterImage language={language} poster={poster} priority={activeIndex === 0} />
               </div>
             </motion.div>
           </AnimatePresence>
@@ -125,8 +131,8 @@ export function StoryViewer({
               shape="pill"
               onClick={onPrevious}
               disabled={isFirst}
-              aria-label="Previous poster"
-              title="Previous poster (Left Arrow)"
+              aria-label={`${text.previous} ${text.poster.toLowerCase()}`}
+              title={text.previous}
               className="shrink-0 tablet:col-start-1 tablet:row-start-1 tablet:justify-self-end tablet:w-auto tablet:px-4"
             >
               <svg
@@ -141,7 +147,7 @@ export function StoryViewer({
               >
                 <path d="m15 18-6-6 6-6" />
               </svg>
-              <span className="hidden tablet:inline">Previous</span>
+              <span className="hidden tablet:inline">{text.previous}</span>
             </Button>
 
             <div className="flex min-w-0 flex-1 flex-col items-center tablet:col-start-2 tablet:row-start-2 tablet:justify-self-center">
@@ -167,7 +173,7 @@ export function StoryViewer({
                   <circle cx="11" cy="11" r="7" />
                   <path d="m20 20-3.5-3.5M11 8v6M8 11h6" />
                 </svg>
-                <span className="truncate">Zoom or read poster text</span>
+                <span className="truncate">{text.zoom}</span>
               </Button>
             </div>
 
@@ -177,11 +183,11 @@ export function StoryViewer({
                 size="icon"
                 shape="pill"
                 onClick={onNext}
-                aria-label="Next poster"
-                title="Next poster (Right Arrow)"
+                aria-label={`${text.next} ${text.poster.toLowerCase()}`}
+                title={text.next}
                 className="shrink-0 border-oyc-cyan/50 text-oyc-cyan tablet:col-start-3 tablet:row-start-1 tablet:justify-self-start tablet:w-auto tablet:px-4"
               >
-                <span className="hidden tablet:inline">Next</span>
+                <span className="hidden tablet:inline">{text.next}</span>
                 <svg
                   viewBox="0 0 24 24"
                   fill="none"
@@ -214,7 +220,7 @@ export function StoryViewer({
                   <path d="m15 18-6-6 6-6" />
                 </svg>
               </motion.span>
-              <span>Swipe poster left or right</span>
+              <span>{text.swipe}</span>
               <motion.span
                 animate={reduceMotion ? undefined : { x: [0, 3, 0] }}
                 transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
@@ -233,7 +239,7 @@ export function StoryViewer({
                 onClick={onNext}
                 className="group tablet:w-auto tablet:px-4 laptop:px-5"
               >
-                <span>Continue to Reflection</span>
+                <span>{text.continueReflection}</span>
                 <svg
                   viewBox="0 0 24 24"
                   fill="none"
@@ -251,7 +257,7 @@ export function StoryViewer({
           )}
         </div>
       </div>
-      {zoomOpen && <PosterZoomDialog poster={poster} onClose={closeZoom} />}
+      {zoomOpen && <PosterZoomDialog language={language} poster={poster} onClose={closeZoom} />}
     </div>
   );
 }

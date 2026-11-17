@@ -4,13 +4,17 @@ import Image from "next/image";
 import { useState } from "react";
 import { Button } from "@/components/ui/Button";
 import type { Poster } from "@/types/journey";
+import { copy } from "@/data/copy";
+import type { Language } from "@/types/journey";
 
 interface PosterImageProps {
+  language: Language;
   poster: Poster;
   priority?: boolean;
 }
 
-export function PosterImage({ poster, priority = false }: PosterImageProps) {
+export function PosterImage({ language, poster, priority = false }: PosterImageProps) {
+  const text = copy[language];
   const [attempt, setAttempt] = useState(0);
   const [status, setStatus] = useState<"loading" | "ready" | "error">("loading");
 
@@ -22,7 +26,7 @@ export function PosterImage({ poster, priority = false }: PosterImageProps) {
   return (
     <div className="relative flex h-full min-h-0 w-full items-center justify-center" aria-busy={status === "loading"}>
       {status === "loading" && (
-        <p className="absolute text-sm text-oyc-text-muted" role="status">Loading poster...</p>
+        <p className="absolute text-sm text-oyc-text-muted" role="status">{text.loadingPoster}</p>
       )}
 
       {status !== "error" && (
@@ -45,9 +49,8 @@ export function PosterImage({ poster, priority = false }: PosterImageProps) {
 
       {status === "error" && (
         <div className="max-w-xs text-center" role="alert">
-          <p className="font-semibold text-white">This poster could not be loaded.</p>
-          <p className="mt-2 text-sm text-oyc-text-muted">Check the connection, then try again.</p>
-          <Button variant="secondary" onClick={retry} className="mt-4">Retry poster</Button>
+          <p className="font-semibold text-white">{text.posterError}</p>
+          <Button variant="secondary" onClick={retry} className="mt-4">{text.retryPoster}</Button>
         </div>
       )}
     </div>

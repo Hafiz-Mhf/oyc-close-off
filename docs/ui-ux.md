@@ -182,7 +182,10 @@ src/
     useAudioPlayer.ts
 public/
   posters/
-    01.png ... 07.png
+    eng/
+      01.png ... 07.png
+    bm/
+      01.png ... 07.png
   audio/
     comet.mp3
     echo.mp3

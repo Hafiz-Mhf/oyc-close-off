@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useReducedMotion } from "motion/react";
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { AudioControls } from "@/components/audio/AudioControls";
 import { JourneyShell } from "@/components/layout/JourneyShell";
 import { ScreenPanel } from "@/components/layout/ScreenPanel";
@@ -9,23 +9,21 @@ import { ClosingScreen } from "@/components/journey/ClosingScreen";
 import { ReflectionScreen } from "@/components/journey/ReflectionScreen";
 import { StoryViewer } from "@/components/journey/StoryViewer";
 import { WelcomeScreen } from "@/components/journey/WelcomeScreen";
-import { posters } from "@/data/posters";
+import { LanguageSelector } from "@/components/ui/LanguageSelector";
+import { copy } from "@/data/copy";
+import { getPosters } from "@/data/posters";
 import { useBackgroundAudio } from "@/hooks/useBackgroundAudio";
-import type { JourneyScreen, ReflectionChoice } from "@/types/journey";
-
-const screenLabels: Record<JourneyScreen, string> = {
-  welcome: "Welcome",
-  story: "The Journey",
-  reflection: "Private Reflection",
-  closing: "Closing",
-};
+import type { JourneyScreen, Language, ReflectionChoice } from "@/types/journey";
 
 export function JourneyApp() {
+  const [language, setLanguage] = useState<Language>("eng");
   const [screen, setScreen] = useState<JourneyScreen>("welcome");
   const [activeIndex, setActiveIndex] = useState(0);
   const [navigationDirection, setNavigationDirection] = useState<-1 | 1>(1);
   const [reflection, setReflection] = useState<ReflectionChoice | null>(null);
   const reduceMotion = useReducedMotion();
+  const posters = useMemo(() => getPosters(language), [language]);
+  const text = copy[language];
   const {
     audioRef,
     currentTrack,
@@ -44,6 +42,10 @@ export function JourneyApp() {
     handlePlay,
     handlePause,
   } = useBackgroundAudio();
+
+  useEffect(() => {
+    document.documentElement.lang = language === "bm" ? "ms" : "en";
+  }, [language]);
 
   const showPreviousPoster = () => {
     if (activeIndex === 0) return;
@@ -77,16 +79,26 @@ export function JourneyApp() {
 
   return (
     <JourneyShell
-      screenLabel={screenLabels[screen]}
+      screenLabel={{
+        welcome: text.screenWelcome,
+        story: text.screenStory,
+        reflection: text.screenReflection,
+        closing: text.screenClosing,
+      }[screen]}
+      homeLabel={language === "bm" ? "Laman utama Penutup OYC" : "OYC Close-Off home"}
       constrained={screen === "story"}
       onHome={() => {
         setActiveIndex(0);
         setNavigationDirection(1);
         setScreen("welcome");
       }}
+      languageControls={screen === "welcome" ? undefined : (
+        <LanguageSelector language={language} onChange={setLanguage} ariaLabel={text.languagePrompt} compact />
+      )}
       audioControls={(
         <AudioControls
-          trackTitle={`${currentTrack.artist} — ${currentTrack.title}`}
+          language={language}
+          trackTitle={`${currentTrack.artist}: ${currentTrack.title}`}
           playing={playing}
           muted={muted}
           volume={volume}
@@ -118,6 +130,8 @@ export function JourneyApp() {
         >
             {screen === "welcome" && (
               <WelcomeScreen
+                language={language}
+                onLanguageChange={setLanguage}
                 onBegin={() => {
                   startFromJourney();
                   setActiveIndex(0);
@@ -129,6 +143,8 @@ export function JourneyApp() {
 
             {screen === "story" && (
               <StoryViewer
+                language={language}
+                posters={posters}
                 activeIndex={activeIndex}
                 direction={navigationDirection}
                 onBack={() => setScreen("welcome")}
@@ -140,6 +156,7 @@ export function JourneyApp() {
 
             {screen === "reflection" && (
               <ReflectionScreen
+                language={language}
                 selected={reflection}
                 onSelect={setReflection}
                 onContinue={() => setScreen("closing")}
@@ -156,7 +173,7 @@ export function JourneyApp() {
             )}
 
             {screen === "closing" && (
-              <ClosingScreen selected={reflection} onRevisit={revisitJourney} />
+              <ClosingScreen language={language} selected={reflection} onRevisit={revisitJourney} />
             )}
         </motion.div>
       </ScreenPanel>

@@ -10,9 +10,11 @@ import {
   type WheelEvent,
 } from "react";
 import { Button } from "@/components/ui/Button";
-import type { Poster } from "@/types/journey";
+import { copy } from "@/data/copy";
+import type { Language, Poster } from "@/types/journey";
 
 interface PosterZoomDialogProps {
+  language: Language;
   poster: Poster;
   onClose: () => void;
 }
@@ -22,7 +24,8 @@ const MIN_SCALE = 1;
 const MAX_SCALE = 3;
 const SCALE_STEP = 0.25;
 
-export function PosterZoomDialog({ poster, onClose }: PosterZoomDialogProps) {
+export function PosterZoomDialog({ language, poster, onClose }: PosterZoomDialogProps) {
+  const text = copy[language];
   const dialogRef = useRef<HTMLDialogElement>(null);
   const pointers = useRef(new Map<number, Point>());
   const previousPinchDistance = useRef<number | null>(null);
@@ -127,10 +130,10 @@ export function PosterZoomDialog({ poster, onClose }: PosterZoomDialogProps) {
       <div className="flex h-full min-h-0 flex-col">
         <header className="flex flex-wrap items-center justify-between gap-2 border-b border-white/10 p-3 tablet:px-5">
           <div>
-            <h2 id="poster-dialog-title" className="font-bold">Poster {poster.id} of 7</h2>
-            <p className="text-xs text-oyc-text-muted">Pinch, scroll or use the controls to zoom. Drag or use arrow keys to pan.</p>
+            <h2 id="poster-dialog-title" className="font-bold">{text.poster} {poster.id} {text.of} 7</h2>
+            <p className="text-xs text-oyc-text-muted">{text.zoomInstructions}</p>
           </div>
-          <Button variant="quiet" size="sm" onClick={onClose}>Close zoom</Button>
+          <Button variant="quiet" size="sm" onClick={onClose}>{text.closeZoom}</Button>
         </header>
 
         <div
@@ -141,7 +144,7 @@ export function PosterZoomDialog({ poster, onClose }: PosterZoomDialogProps) {
           onPointerUp={releasePointer}
           onPointerCancel={releasePointer}
           onWheel={handleWheel}
-          aria-label={`Zoomed view of poster ${poster.id}`}
+          aria-label={`${text.zoomedView} ${poster.id}`}
         >
           <Image
             src={poster.src}
@@ -157,22 +160,22 @@ export function PosterZoomDialog({ poster, onClose }: PosterZoomDialogProps) {
         </div>
 
         <footer className="border-t border-white/10 bg-oyc-navy p-3 tablet:px-5">
-          <div className="flex flex-wrap items-center justify-center gap-2" aria-label="Poster zoom controls">
-            <Button variant="secondary" size="icon" onClick={() => updateScale(scale - SCALE_STEP)} disabled={scale <= MIN_SCALE} aria-label="Zoom out">
+          <div className="flex flex-wrap items-center justify-center gap-2" aria-label={text.zoomControls}>
+            <Button variant="secondary" size="icon" onClick={() => updateScale(scale - SCALE_STEP)} disabled={scale <= MIN_SCALE} aria-label={text.zoomOut}>
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" className="h-4 w-4" aria-hidden="true">
                 <path d="M5 12h14" />
               </svg>
             </Button>
             <output className="min-w-16 text-center text-sm font-semibold" aria-live="polite">{Math.round(scale * 100)}%</output>
-            <Button variant="secondary" size="icon" onClick={() => updateScale(scale + SCALE_STEP)} disabled={scale >= MAX_SCALE} aria-label="Zoom in">
+            <Button variant="secondary" size="icon" onClick={() => updateScale(scale + SCALE_STEP)} disabled={scale >= MAX_SCALE} aria-label={text.zoomIn}>
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" className="h-4 w-4" aria-hidden="true">
                 <path d="M12 5v14M5 12h14" />
               </svg>
             </Button>
-            <Button variant="quiet" size="sm" onClick={reset} disabled={scale === MIN_SCALE && position.x === 0 && position.y === 0}>Reset</Button>
+            <Button variant="quiet" size="sm" onClick={reset} disabled={scale === MIN_SCALE && position.x === 0 && position.y === 0}>{text.reset}</Button>
           </div>
           <details className="mx-auto mt-2 max-w-3xl rounded-lg border border-white/10 bg-white/5 px-4 py-2 text-sm">
-            <summary className="min-h-11 cursor-pointer py-2 font-semibold text-oyc-cyan">Read poster text</summary>
+            <summary className="min-h-11 cursor-pointer py-2 font-semibold text-oyc-cyan">{text.readPoster}</summary>
             <div className="max-h-40 overflow-y-auto pb-2 leading-6 text-oyc-text-muted tablet:max-h-48">
               {poster.transcript.map((line) => <p key={line} className="mt-2 first:mt-0">{line}</p>)}
             </div>

@@ -1,9 +1,9 @@
-import type { Poster } from "@/types/journey";
+import type { Language, Poster } from "@/types/journey";
 
 export const posters: readonly Poster[] = [
   {
     id: 1,
-    src: "/posters/01.png",
+    src: "/posters/eng/01.png",
     title: "4 Weeks. One Journey. Endless Possibilities.",
     alt: "OYC Close-Off poster: 4 Weeks. One Journey. Endless Possibilities.",
     transcript: [
@@ -11,12 +11,12 @@ export const posters: readonly Poster[] = [
       "The Own Your Career campaign may be wrapping up, but your next move is yours to choose.",
       "Let's look back, reflect and keep the momentum going.",
     ],
-    width: 1200,
-    height: 1500,
+    width: 1124,
+    height: 1399,
   },
   {
     id: 2,
-    src: "/posters/02.png",
+    src: "/posters/eng/02.png",
     title: "Have You Given It a Try?",
     alt: "OYC Close-Off poster asking whether colleagues tried Imagine, Explore, Talk, or Act.",
     transcript: [
@@ -28,28 +28,28 @@ export const posters: readonly Poster[] = [
       "Act: Choose one move to try in the next 3 to 6 months.",
       "Which of these did you explore or try?",
     ],
-    width: 1200,
-    height: 1500,
+    width: 1122,
+    height: 1402,
   },
   {
     id: 3,
-    src: "/posters/03.png",
+    src: "/posters/eng/03.png",
     title: "Every Small Step Counts.",
     alt: "OYC Close-Off poster encouraging colleagues to continue at their own pace.",
     transcript: [
       "OYC Close-Off. Every small step counts.",
-      "Whether you've tried one of the activities, are still exploring, or haven't started yet — it's all part of your career journey.",
+      "Whether you've tried one of the activities, are still exploring, or haven't started yet, it's all part of your career journey.",
       "Tried it? Great! Keep building on the insights.",
       "Still exploring? Take your time and see what fits you.",
       "Haven't started? It's not too late. You can still give it a try.",
       "There's no perfect plan. Go at your own pace.",
     ],
-    width: 1200,
-    height: 1500,
+    width: 1122,
+    height: 1402,
   },
   {
     id: 4,
-    src: "/posters/04.png",
+    src: "/posters/eng/04.png",
     title: "Your Journey Continues. Make Your Next Move.",
     alt: "OYC Close-Off poster encouraging a next career move within three to six months.",
     transcript: [
@@ -58,29 +58,29 @@ export const posters: readonly Poster[] = [
       "The campaign may be ending, but the opportunity to explore, grow and shape your career continues.",
       "Keep the momentum going and make that move within the next 3–6 months.",
     ],
-    width: 1200,
-    height: 1500,
+    width: 1121,
+    height: 1403,
   },
   {
     id: 5,
-    src: "/posters/05.png",
+    src: "/posters/eng/05.png",
     title: "4 Weeks. 4 Themes. One Journey.",
     alt: "OYC Close-Off recap poster for Imagine, Explore, Talk, and Act.",
     transcript: [
       "OYC Close-Off. 4 Weeks. 4 Themes. One Journey.",
       "A quick look back at the four flashcards we explored together.",
-      "Week 1 — Imagine: What impact do you want to make?",
-      "Week 2 — Explore: Where could your skills take you?",
-      "Week 3 — Talk: Who could you have a career conversation with?",
-      "Week 4 — Act: What's one move you could try?",
+      "Week 1, Imagine: What impact do you want to make?",
+      "Week 2, Explore: Where could your skills take you?",
+      "Week 3, Talk: Who could you have a career conversation with?",
+      "Week 4, Act: What's one move you could try?",
       "Which flashcard would you like to revisit?",
     ],
-    width: 1200,
-    height: 1500,
+    width: 1121,
+    height: 1403,
   },
   {
     id: 6,
-    src: "/posters/06.png",
+    src: "/posters/eng/06.png",
     title: "Quick Check-In.",
     alt: "OYC Close-Off career conversation reflection poster.",
     transcript: [
@@ -93,12 +93,12 @@ export const posters: readonly Poster[] = [
       "Post-chat outcome: I left with more clarity and confidence about my next move.",
       "Haven't had your career chat yet? Use these five points to guide your conversation with your immediate supervisor.",
     ],
-    width: 1200,
-    height: 1500,
+    width: 1122,
+    height: 1402,
   },
   {
     id: 7,
-    src: "/posters/07.png",
+    src: "/posters/eng/07.png",
     title: "5 Small Ways to Keep Growing.",
     alt: "OYC Close-Off poster listing five small ways to keep growing.",
     transcript: [
@@ -111,7 +111,107 @@ export const posters: readonly Poster[] = [
       "5. Keep exploring: Return to the other ideas at your own pace.",
       "You don't have to do it all. Start with one that matters to you.",
     ],
-    width: 1200,
-    height: 1500,
+    width: 1122,
+    height: 1402,
   },
 ] as const;
+
+const bmPosterCopy: readonly Pick<Poster, "title" | "alt" | "transcript">[] = [
+  {
+    title: "4 Minggu. Satu Perjalanan. Pelbagai Peluang Menanti.",
+    alt: "Poster Penutup OYC: 4 Minggu. Satu Perjalanan. Pelbagai Peluang Menanti.",
+    transcript: [
+      "Penutup OYC. 4 Minggu. Satu Perjalanan. Pelbagai Peluang Menanti.",
+      "Kempen Own Your Career mungkin akan berakhir, tetapi langkah seterusnya adalah pilihan anda.",
+      "Mari lihat kembali, buat refleksi dan teruskan momentum.",
+    ],
+  },
+  {
+    title: "Sudahkah Anda Mencubanya?",
+    alt: "Poster Penutup OYC yang bertanya sama ada warga kerja telah mencuba Bayangkan, Terokai, Berbual atau Bertindak.",
+    transcript: [
+      "Penutup OYC. Sudahkah anda mencubanya?",
+      "Sepanjang empat minggu lalu, kita meneroka cara mudah untuk memikirkan kerjaya, kekuatan dan langkah seterusnya.",
+      "Bayangkan: Gambarkan masa depan atau impak yang ingin anda hasilkan.",
+      "Terokai: Lihat sejauh mana kompetensi anda boleh membawa anda.",
+      "Berbual: Bawa satu kemungkinan ke dalam perbualan kerjaya.",
+      "Bertindak: Pilih satu langkah untuk dicuba dalam tempoh 3 hingga 6 bulan akan datang.",
+      "Yang manakah telah anda terokai atau cuba?",
+    ],
+  },
+  {
+    title: "Setiap Langkah Kecil Bermakna.",
+    alt: "Poster Penutup OYC yang menggalakkan warga kerja meneruskan perjalanan mengikut kemampuan sendiri.",
+    transcript: [
+      "Penutup OYC. Setiap langkah kecil bermakna.",
+      "Sama ada anda telah mencuba salah satu aktiviti, masih meneroka atau belum bermula, semuanya sebahagian daripada perjalanan kerjaya anda.",
+      "Sudah mencuba? Bagus! Terus bina berdasarkan pandangan yang diperoleh.",
+      "Masih meneroka? Ambil masa anda dan lihat apa yang sesuai.",
+      "Belum bermula? Masih belum terlambat. Anda masih boleh mencubanya.",
+      "Tiada rancangan yang sempurna. Bergeraklah mengikut kemampuan anda.",
+    ],
+  },
+  {
+    title: "Perjalanan Anda Diteruskan. Ambil Langkah Seterusnya.",
+    alt: "Poster Penutup OYC yang menggalakkan langkah kerjaya seterusnya dalam tempoh tiga hingga enam bulan.",
+    transcript: [
+      "Penutup OYC. Perjalanan anda diteruskan. Ambil langkah seterusnya.",
+      "Bayangkan. Terokai. Berbual. Bertindak.",
+      "Kempen mungkin berakhir, tetapi peluang untuk meneroka, berkembang dan membentuk kerjaya anda diteruskan.",
+      "Teruskan momentum dan ambil langkah tersebut dalam tempoh 3 hingga 6 bulan.",
+    ],
+  },
+  {
+    title: "4 Minggu. 4 Tema. Satu Perjalanan.",
+    alt: "Poster imbas kembali Penutup OYC bagi Bayangkan, Terokai, Berbual dan Bertindak.",
+    transcript: [
+      "Penutup OYC. 4 Minggu. 4 Tema. Satu Perjalanan.",
+      "Imbas kembali empat kad imbas yang telah kita terokai bersama.",
+      "Minggu 1, Bayangkan: Apakah impak yang ingin anda hasilkan?",
+      "Minggu 2, Terokai: Ke manakah kemahiran anda boleh membawa anda?",
+      "Minggu 3, Berbual: Dengan siapakah anda boleh mengadakan perbualan kerjaya?",
+      "Minggu 4, Bertindak: Apakah satu langkah yang boleh anda cuba?",
+      "Kad imbas yang manakah ingin anda lihat semula?",
+    ],
+  },
+  {
+    title: "Semakan Ringkas.",
+    alt: "Poster refleksi perbualan kerjaya Penutup OYC.",
+    transcript: [
+      "Penutup OYC. Semakan ringkas. Bagaimanakah perbualan kerjaya anda?",
+      "Sudah berbual tentang kerjaya dengan penyelia terdekat? Luangkan masa untuk membuat refleksi. Adakah lima pernyataan ini menggambarkan pengalaman anda?",
+      "Perbualan terbuka: Saya selesa berkongsi pandangan dan penyelia terdekat saya mendengar.",
+      "Kekuatan: Saya lebih memahami kekuatan, minat dan cara saya boleh menyumbang.",
+      "Langkah seterusnya: Kami mengenal pasti satu matlamat realistik untuk diusahakan dalam tempoh 3 hingga 6 bulan.",
+      "Sokongan: Kami membincangkan sokongan atau peluang yang boleh dibantu oleh penyelia terdekat saya.",
+      "Hasil perbualan: Saya mendapat lebih kejelasan dan keyakinan tentang langkah seterusnya.",
+      "Belum mengadakan perbualan kerjaya? Gunakan lima perkara ini untuk membimbing perbualan dengan penyelia terdekat anda.",
+    ],
+  },
+  {
+    title: "5 Cara Kecil untuk Terus Berkembang.",
+    alt: "Poster Penutup OYC yang menyenaraikan lima cara kecil untuk terus berkembang.",
+    transcript: [
+      "Penutup OYC. 5 cara kecil untuk terus berkembang.",
+      "Perjalanan OYC anda tidak perlu berakhir di sini.",
+      "1. Lihat kembali: Semak semula empat kad imbas OYC.",
+      "2. Pilih satu: Pilih aktiviti yang menarik minat anda.",
+      "3. Cubalah: Ambil satu langkah kecil apabila anda bersedia.",
+      "4. Buat refleksi: Fikirkan perkara yang telah anda pelajari.",
+      "5. Terus meneroka: Kembali kepada idea lain mengikut kemampuan anda.",
+      "Anda tidak perlu melakukan semuanya. Mulakan dengan satu perkara yang bermakna kepada anda.",
+    ],
+  },
+];
+
+export function getPosters(language: Language): readonly Poster[] {
+  if (language === "eng") return posters;
+
+  return posters.map((poster, index) => ({
+    ...poster,
+    src: `/posters/bm/${String(poster.id).padStart(2, "0")}.png`,
+    width: index === 4 ? 1121 : 1122,
+    height: index === 4 ? 1403 : 1402,
+    ...bmPosterCopy[index],
+  }));
+}

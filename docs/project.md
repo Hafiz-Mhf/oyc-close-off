@@ -17,10 +17,10 @@ MRANTI's Own Your Career (OYC) four-week campaign is closing. HR wants colleague
 - MRANTI colleagues/staff, including non-executive and executive staff.
 - Public, unlisted URL may be distributed internally. **Unlisted does not mean private**; never publish confidential material or personal data.
 - No account, login, staff profile, survey submission, or server-side persistence.
-- English copy based on current approved carousel; do not introduce unapproved translations.
+- English and Bahasa Melayu poster sets are owner-supplied and approved for bilingual presentation.
 
 ## 5. Approved content and image handling
-- Exactly **seven original close-off poster images**, provided separately by the project owner.
+- Exactly **seven English and seven Bahasa Melayu close-off poster images**, provided separately by the project owner.
 - Keep every poster's text, colour, artwork, logo, proportions and composition exactly as supplied.
 - Do not use screenshots of thumbnail strips or AI-generated substitutes as final assets.
 - Proposed semantic slide labels for navigation only (confirm against final supplied files):

@@ -2,13 +2,19 @@
 
 import { motion, useReducedMotion } from "motion/react";
 import { Button } from "@/components/ui/Button";
+import { LanguageSelector } from "@/components/ui/LanguageSelector";
+import { copy } from "@/data/copy";
+import type { Language } from "@/types/journey";
 
 interface WelcomeScreenProps {
+  language: Language;
+  onLanguageChange: (language: Language) => void;
   onBegin: () => void;
 }
 
-export function WelcomeScreen({ onBegin }: WelcomeScreenProps) {
+export function WelcomeScreen({ language, onLanguageChange, onBegin }: WelcomeScreenProps) {
   const reduceMotion = useReducedMotion();
+  const text = copy[language];
   const item = {
     hidden: { opacity: 0, y: reduceMotion ? 0 : 14 },
     visible: { opacity: 1, y: 0 },
@@ -23,17 +29,22 @@ export function WelcomeScreen({ onBegin }: WelcomeScreenProps) {
         variants={{ visible: { transition: { staggerChildren: reduceMotion ? 0 : 0.1 } } }}
       >
         <motion.p variants={item} className="mb-4 text-sm font-bold tracking-[0.18em] text-oyc-cyan uppercase">
-          Own Your Career Close-Off
+          {text.eyebrow}
         </motion.p>
         <motion.h1 variants={item} className="text-balance text-4xl leading-[1.04] font-black tracking-[-0.04em] text-white phone:text-5xl tablet:text-7xl">
-          4 Weeks. One Journey. Endless Possibilities.
+          {text.welcomeTitle}
         </motion.h1>
         <motion.p variants={item} className="mx-auto mt-6 max-w-2xl text-pretty text-base leading-7 text-oyc-text-muted tablet:text-xl tablet:leading-8">
-          Your journey doesn&apos;t end here. <span className="text-white">The Journey Continues.</span>
+          {text.welcomeSupport} <span className="text-white">{text.welcomeTheme}</span>
         </motion.p>
+        <motion.div variants={item} className="mx-auto mt-7 max-w-md text-left">
+          <p className="mb-2 text-center text-sm font-bold text-white">{text.languagePrompt}</p>
+          <LanguageSelector language={language} onChange={onLanguageChange} ariaLabel={text.languagePrompt} />
+          <p className="mt-2 text-center text-xs leading-5 text-oyc-text-muted">{text.languageHelp}</p>
+        </motion.div>
         <motion.div variants={item} className="mx-auto mt-9 max-w-sm">
           <Button fullWidth size="lg" shape="pill" onClick={onBegin} className="group">
-            <span>Begin Your Journey</span>
+            <span>{text.begin}</span>
             <svg
               viewBox="0 0 24 24"
               fill="none"
@@ -49,7 +60,7 @@ export function WelcomeScreen({ onBegin }: WelcomeScreenProps) {
           </Button>
         </motion.div>
         <motion.p variants={item} className="mt-5 text-xs leading-5 text-oyc-text-muted/80">
-          Music starts at 50% when you begin. Pause, mute or adjust it at any time.
+          {text.musicNote}
         </motion.p>
       </motion.div>
     </div>

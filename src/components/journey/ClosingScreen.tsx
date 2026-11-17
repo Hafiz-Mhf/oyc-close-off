@@ -2,15 +2,19 @@
 
 import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/Button";
-import { reflectionOptions } from "@/data/reflections";
-import type { ReflectionChoice } from "@/types/journey";
+import { copy } from "@/data/copy";
+import { getReflectionOptions } from "@/data/reflections";
+import type { Language, ReflectionChoice } from "@/types/journey";
 
 interface ClosingScreenProps {
+  language: Language;
   selected: ReflectionChoice | null;
   onRevisit: () => void;
 }
 
-export function ClosingScreen({ selected, onRevisit }: ClosingScreenProps) {
+export function ClosingScreen({ language, selected, onRevisit }: ClosingScreenProps) {
+  const text = copy[language];
+  const reflectionOptions = getReflectionOptions(language);
   const selectedOption = reflectionOptions.find((option) => option.id === selected);
   const [shareStatus, setShareStatus] = useState<string | null>(null);
   const [linkCopied, setLinkCopied] = useState(false);
@@ -47,7 +51,7 @@ export function ClosingScreen({ selected, onRevisit }: ClosingScreenProps) {
     if (navigator.share) {
       try {
         await navigator.share({ url: shareUrl });
-        setShareStatus("Share options opened.");
+        setShareStatus(text.shareOpened);
         return;
       } catch (error) {
         if (error instanceof DOMException && error.name === "AbortError") return;
@@ -60,34 +64,34 @@ export function ClosingScreen({ selected, onRevisit }: ClosingScreenProps) {
       if (copyTimerRef.current !== null) window.clearTimeout(copyTimerRef.current);
       copyTimerRef.current = window.setTimeout(() => setLinkCopied(false), 2500);
     }
-    setShareStatus(copied ? "Microsite link copied." : "Could not copy the link. Copy it from your address bar.");
+    setShareStatus(copied ? text.copiedStatus : text.copyFailed);
   };
 
   return (
     <div className="flex flex-1 items-center justify-center px-5 py-8 text-center tablet:px-12 tablet:py-16">
       <div className="mx-auto w-full min-w-0 max-w-3xl">
-        <p className="text-sm font-bold tracking-[0.18em] text-oyc-cyan uppercase">Keep growing</p>
+        <p className="text-sm font-bold tracking-[0.18em] text-oyc-cyan uppercase">{text.closingEyebrow}</p>
         <h1 className="mt-4 text-balance text-3xl leading-[1.08] font-black tracking-[-0.04em] phone:text-4xl tablet:text-6xl">
-          The Campaign Ends. Your Journey Continues.
+          {text.closingTitle}
         </h1>
         <p className="mx-auto mt-5 max-w-2xl text-pretty text-base leading-7 text-oyc-text-muted tablet:mt-6 tablet:text-xl">
-          Keep exploring your strengths, growing your skills and taking ownership of your career.
+          {text.closingSupport}
         </p>
 
         <div className="mx-auto mt-6 min-h-28 max-w-2xl tablet:mt-7" aria-live="polite">
           <div className="rounded-2xl border border-oyc-border bg-white/5 p-5 tablet:p-6">
             <p className="text-xs font-bold tracking-[0.14em] text-oyc-cyan uppercase">
-              {selectedOption ? "Your private takeaway" : "Keep moving forward"}
+              {selectedOption ? text.takeaway : text.keepMoving}
             </p>
             <p className="mt-2 text-sm leading-6 text-oyc-text tablet:text-base">
-              {selectedOption?.takeaway ?? "Your next move starts with you. Take one small step when you're ready."}
+              {selectedOption?.takeaway ?? text.genericTakeaway}
             </p>
           </div>
         </div>
 
         <div className="mx-auto mt-6 flex max-w-md flex-col gap-3 tablet:mt-7 tablet:max-w-xl tablet:flex-row tablet:justify-center">
           <Button fullWidth onClick={onRevisit} className="tablet:w-auto tablet:min-w-48">
-            Revisit the Journey
+            {text.revisit}
           </Button>
           <Button
             fullWidth
@@ -100,10 +104,10 @@ export function ClosingScreen({ selected, onRevisit }: ClosingScreenProps) {
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4 shrink-0" aria-hidden="true">
                   <path d="M20 6 9 17l-5-5" />
                 </svg>
-                <span>Link Copied</span>
+                <span>{text.linkCopied}</span>
               </>
             ) : (
-              <span>Share with a Colleague</span>
+              <span>{text.share}</span>
             )}
           </Button>
         </div>

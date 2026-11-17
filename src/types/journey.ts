@@ -1,5 +1,7 @@
 export type JourneyScreen = "welcome" | "story" | "reflection" | "closing";
 
+export type Language = "eng" | "bm";
+
 export type ReflectionChoice =
   | "strength"
   | "conversation"
@@ -12,8 +14,8 @@ export interface Poster {
   title: string;
   alt: string;
   transcript: readonly string[];
-  width: 1200;
-  height: 1500;
+  width: number;
+  height: number;
 }
 
 export interface AudioTrack {

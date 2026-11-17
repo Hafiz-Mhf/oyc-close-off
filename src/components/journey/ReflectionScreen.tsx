@@ -1,9 +1,11 @@
 import type { KeyboardEvent } from "react";
 import { Button } from "@/components/ui/Button";
-import { reflectionOptions } from "@/data/reflections";
-import type { ReflectionChoice } from "@/types/journey";
+import { copy } from "@/data/copy";
+import { getReflectionOptions } from "@/data/reflections";
+import type { Language, ReflectionChoice } from "@/types/journey";
 
 interface ReflectionScreenProps {
+  language: Language;
   selected: ReflectionChoice | null;
   onSelect: (choice: ReflectionChoice) => void;
   onContinue: () => void;
@@ -12,12 +14,15 @@ interface ReflectionScreenProps {
 }
 
 export function ReflectionScreen({
+  language,
   selected,
   onSelect,
   onContinue,
   onSkip,
   onBack,
 }: ReflectionScreenProps) {
+  const text = copy[language];
+  const reflectionOptions = getReflectionOptions(language);
   const selectedOption = reflectionOptions.find((option) => option.id === selected);
 
   const handleOptionKeyDown = (event: KeyboardEvent<HTMLButtonElement>, index: number) => {
@@ -39,15 +44,15 @@ export function ReflectionScreen({
   return (
     <div className="flex flex-1 flex-col px-5 py-6 tablet:px-12 tablet:py-10">
       <Button variant="quiet" size="sm" onClick={onBack} className="mr-auto">
-        Back to poster 7
+        {text.backPoster7}
       </Button>
       <div className="mx-auto mt-5 w-full max-w-4xl">
-        <p className="text-sm font-bold tracking-[0.16em] text-oyc-cyan uppercase">Private reflection</p>
+        <p className="text-sm font-bold tracking-[0.16em] text-oyc-cyan uppercase">{text.reflectionEyebrow}</p>
         <h1 id="reflection-heading" className="mt-3 text-3xl leading-tight font-black tracking-[-0.03em] tablet:text-5xl">
-          What&apos;s one small step you&apos;d like to take next?
+          {text.reflectionTitle}
         </h1>
         <p className="mt-3 text-sm leading-6 text-oyc-text-muted">
-          Your choice is not submitted or stored.
+          {text.reflectionPrivacy}
         </p>
 
         <div
@@ -99,7 +104,7 @@ export function ReflectionScreen({
         <div aria-live="polite" className="min-h-24">
           {selectedOption && (
             <div className="mt-5 rounded-2xl border border-oyc-cyan/50 bg-oyc-navy-panel/75 p-5">
-              <p className="text-xs font-bold tracking-[0.14em] text-oyc-cyan uppercase">Your private takeaway</p>
+              <p className="text-xs font-bold tracking-[0.14em] text-oyc-cyan uppercase">{text.takeaway}</p>
               <p className="mt-2 text-sm leading-6 text-oyc-text tablet:text-base">
                 {selectedOption.takeaway}
               </p>
@@ -109,10 +114,10 @@ export function ReflectionScreen({
 
         <div className="mt-3 flex flex-col-reverse gap-3 phone:flex-row phone:justify-end">
           <Button variant="secondary" onClick={onSkip}>
-            Skip for now
+            {text.skip}
           </Button>
           <Button onClick={onContinue} disabled={!selected}>
-            Continue
+            {text.continue}
           </Button>
         </div>
       </div>

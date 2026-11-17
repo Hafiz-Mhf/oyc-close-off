@@ -14,13 +14,10 @@
 oyc-closeoff/
 ├── public/
 │   ├── posters/
-│   │   ├── 01.png
-│   │   ├── 02.png
-│   │   ├── 03.png
-│   │   ├── 04.png
-│   │   ├── 05.png
-│   │   ├── 06.png
-│   │   └── 07.png
+│   │   ├── eng/
+│   │   │   └── 01.png ... 07.png
+│   │   └── bm/
+│   │       └── 01.png ... 07.png
 │   └── audio/
 │       ├── comet.mp3
 │       └── echo.mp3
@@ -50,6 +47,7 @@ Asset extensions and paths are illustrative: adapt to the actual supplied files,
 ## 3. State management
 - Top-level client-side journey state: `welcome | story | reflection | closing`.
 - Story index: integer `0..6`.
+- Language: `eng | bm`, stored only in top-level React state and switchable without resetting the story index, reflection or audio state.
 - Reflection selection: optional enum `strength | conversation | learning | action | null`.
 - Audio state: current track index, `playing`, `muted`, `volume`, user-pause intent, start-attempt state, fade state and error state.
 - Mount one persistent audio element above individual screens so transitions do not restart playback.
@@ -84,7 +82,7 @@ Asset extensions and paths are illustrative: adapt to the actual supplied files,
 
 ## 7. Deployment
 1. Create Next.js TypeScript project and install Tailwind; add Motion if needed.
-2. Add supplied poster assets to `/public/posters`; use the approved official logo in the global header and approved square emblem for browser icons.
+2. Add English poster assets to `/public/posters/eng` and Bahasa Melayu poster assets to `/public/posters/bm`; use the approved official logo in the global header and approved square emblem for browser icons.
 3. Add `public/audio/comet.mp3` and `public/audio/echo.mp3` with their attribution/licence records.
 4. Implement, test locally, and push to GitHub.
 5. Import GitHub repository into Vercel; use default Next.js framework settings.
