@@ -1,5 +1,6 @@
 import { Fragment, type KeyboardEvent } from "react";
 import { Button } from "@/components/ui/Button";
+import { LanguageSelector } from "@/components/ui/LanguageSelector";
 import { copy } from "@/data/copy";
 import { getReflectionOptions } from "@/data/reflections";
 import type { Language, ReflectionChoice } from "@/types/journey";
@@ -11,6 +12,7 @@ interface ReflectionScreenProps {
   onContinue: () => void;
   onSkip: () => void;
   onBack: () => void;
+  onLanguageChange: (language: Language) => void;
 }
 
 export function ReflectionScreen({
@@ -20,6 +22,7 @@ export function ReflectionScreen({
   onContinue,
   onSkip,
   onBack,
+  onLanguageChange,
 }: ReflectionScreenProps) {
   const text = copy[language];
   const newTabLabel = language === "bm" ? "dibuka dalam tab baharu" : "opens in a new tab";
@@ -44,9 +47,20 @@ export function ReflectionScreen({
 
   return (
     <div className="flex flex-1 flex-col px-5 py-6 tablet:px-12 tablet:py-10">
-      <Button variant="quiet" size="sm" onClick={onBack} className="mr-auto">
-        {text.backPoster7}
-      </Button>
+      <div className="flex items-center justify-between gap-2">
+        <Button variant="quiet" size="sm" onClick={onBack} className="mr-auto">
+          {text.backPoster7}
+        </Button>
+        <div className="tablet:hidden">
+          <LanguageSelector
+            language={language}
+            onChange={onLanguageChange}
+            ariaLabel={text.languageSwitcherLabel}
+            compact
+            toolbar
+          />
+        </div>
+      </div>
       <div className="mx-auto mt-5 w-full max-w-4xl">
         <p className="text-sm font-bold tracking-[0.16em] text-oyc-cyan uppercase">{text.reflectionEyebrow}</p>
         <h1 id="reflection-heading" className="mt-3 text-3xl leading-tight font-black tracking-[-0.03em] tablet:text-5xl">

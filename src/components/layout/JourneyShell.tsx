@@ -7,12 +7,11 @@ interface JourneyShellProps {
   homeLabel: string;
   audioControls?: ReactNode;
   languageControls?: ReactNode;
-  hideLanguageControlsOnMobile?: boolean;
   constrained?: boolean;
   onHome: () => void;
 }
 
-export function JourneyShell({ children, screenLabel, homeLabel, audioControls, languageControls, hideLanguageControlsOnMobile = false, constrained = false, onHome }: JourneyShellProps) {
+export function JourneyShell({ children, screenLabel, homeLabel, audioControls, languageControls, constrained = false, onHome }: JourneyShellProps) {
   return (
     <main className="safe-area-shell relative isolate overflow-hidden">
       <div
@@ -29,14 +28,14 @@ export function JourneyShell({ children, screenLabel, homeLabel, audioControls, 
           : "min-h-[calc(100dvh-1.5rem)] tablet:min-h-[calc(100dvh-3rem)]"
       }`}>
         <header
-          className={`flex min-h-14 flex-wrap items-start justify-between gap-x-3 gap-y-1.5 px-1 pb-3 tablet:flex-nowrap tablet:items-center tablet:px-3 ${
-            constrained ? "tablet:mx-auto tablet:w-full tablet:max-w-5xl tablet:px-1 tablet:pb-2.5" : "tablet:pb-5"
+          className={`flex min-h-14 items-center justify-between gap-x-3 px-1 pb-3 tablet:px-3 ${
+            constrained ? "tablet:pb-2.5" : "tablet:pb-5"
           }`}
         >
           <button
             type="button"
             onClick={onHome}
-            className="group inline-flex min-h-11 shrink-0 cursor-pointer items-center rounded-xl px-1 transition-colors hover:bg-white/5"
+            className="group inline-flex min-h-11 shrink-0 cursor-pointer items-center rounded-2xl px-2 py-1 transition-colors hover:bg-white/5"
             aria-label={homeLabel}
           >
             <Image
@@ -48,12 +47,12 @@ export function JourneyShell({ children, screenLabel, homeLabel, audioControls, 
               className="h-auto w-[6.75rem] transition-transform duration-200 group-hover:scale-[1.03] tablet:w-[8.25rem]"
             />
           </button>
-          {languageControls && (
-            <div className={`order-3 w-full justify-end tablet:order-none tablet:flex tablet:w-auto ${hideLanguageControlsOnMobile ? "hidden" : "flex"}`}>
-              {languageControls}
-            </div>
-          )}
-          <div className="flex min-w-0 items-center gap-3">
+          <div className="flex min-w-0 items-center gap-2.5 tablet:gap-3">
+            {languageControls && (
+              <div className="hidden shrink-0 tablet:flex">
+                {languageControls}
+              </div>
+            )}
             {audioControls}
             <p className="sr-only">{screenLabel}</p>
           </div>

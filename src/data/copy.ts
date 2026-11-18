@@ -3,6 +3,7 @@ import type { Language } from "@/types/journey";
 export const copy = {
   eng: {
     languagePrompt: "Choose poster language",
+    languageSwitcherLabel: "Choose language",
     languageHelp: "Switch languages anytime—your progress stays saved.",
     screenWelcome: "Welcome",
     screenStory: "The Journey",
@@ -71,6 +72,7 @@ export const copy = {
   },
   bm: {
     languagePrompt: "Pilih bahasa poster",
+    languageSwitcherLabel: "Pilih bahasa",
     languageHelp: "Tukar bahasa pada bila-bila masa—paparan anda kekal tersimpan.",
     screenWelcome: "Selamat datang",
     screenStory: "Perjalanan",

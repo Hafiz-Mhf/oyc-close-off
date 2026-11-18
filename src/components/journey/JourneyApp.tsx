@@ -93,9 +93,8 @@ export function JourneyApp() {
         setScreen("welcome");
       }}
       languageControls={screen === "welcome" ? undefined : (
-        <LanguageSelector language={language} onChange={setLanguage} ariaLabel={text.languagePrompt} compact />
+        <LanguageSelector language={language} onChange={setLanguage} ariaLabel={text.languageSwitcherLabel} compact />
       )}
-      hideLanguageControlsOnMobile={screen === "story"}
       audioControls={(
         <AudioControls
           language={language}
@@ -171,11 +170,17 @@ export function JourneyApp() {
                   setNavigationDirection(-1);
                   setScreen("story");
                 }}
+                onLanguageChange={setLanguage}
               />
             )}
 
             {screen === "closing" && (
-              <ClosingScreen language={language} selected={reflection} onRevisit={revisitJourney} />
+              <ClosingScreen
+                language={language}
+                selected={reflection}
+                onRevisit={revisitJourney}
+                onLanguageChange={setLanguage}
+              />
             )}
         </motion.div>
       </ScreenPanel>

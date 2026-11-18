@@ -79,7 +79,7 @@ export function StoryViewer({
             <LanguageSelector
               language={language}
               onChange={onLanguageChange}
-              ariaLabel={text.languagePrompt}
+              ariaLabel={text.languageSwitcherLabel}
               compact
               toolbar
             />

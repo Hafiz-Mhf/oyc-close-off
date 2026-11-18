@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/Button";
+import { LanguageSelector } from "@/components/ui/LanguageSelector";
 import { copy } from "@/data/copy";
 import { getReflectionOptions } from "@/data/reflections";
 import type { Language, ReflectionChoice } from "@/types/journey";
@@ -10,9 +11,10 @@ interface ClosingScreenProps {
   language: Language;
   selected: ReflectionChoice | null;
   onRevisit: () => void;
+  onLanguageChange: (language: Language) => void;
 }
 
-export function ClosingScreen({ language, selected, onRevisit }: ClosingScreenProps) {
+export function ClosingScreen({ language, selected, onRevisit, onLanguageChange }: ClosingScreenProps) {
   const text = copy[language];
   const reflectionOptions = getReflectionOptions(language);
   const selectedOption = reflectionOptions.find((option) => option.id === selected);
@@ -68,8 +70,17 @@ export function ClosingScreen({ language, selected, onRevisit }: ClosingScreenPr
   };
 
   return (
-    <div className="flex flex-1 items-center justify-center px-5 py-8 text-center tablet:px-12 tablet:py-16">
-      <div className="mx-auto w-full min-w-0 max-w-3xl">
+    <div className="flex flex-1 flex-col px-5 py-6 text-center tablet:items-center tablet:justify-center tablet:px-12 tablet:py-16">
+      <div className="mb-2 flex justify-end tablet:hidden">
+        <LanguageSelector
+          language={language}
+          onChange={onLanguageChange}
+          ariaLabel={text.languageSwitcherLabel}
+          compact
+          toolbar
+        />
+      </div>
+      <div className="mx-auto my-auto w-full min-w-0 max-w-3xl">
         <p className="text-sm font-bold tracking-[0.18em] text-oyc-cyan uppercase">{text.closingEyebrow}</p>
         <h1 className="mt-4 text-balance text-3xl leading-[1.08] font-black tracking-[-0.04em] phone:text-4xl tablet:text-6xl">
           {text.closingTitle}
