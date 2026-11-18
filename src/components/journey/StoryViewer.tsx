@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import { PosterImage } from "@/components/poster/PosterImage";
 import { PosterZoomDialog } from "@/components/poster/PosterZoomDialog";
 import { Button } from "@/components/ui/Button";
+import { LanguageSelector } from "@/components/ui/LanguageSelector";
 import { copy } from "@/data/copy";
 import { useStoryNavigation } from "@/hooks/useStoryNavigation";
 import { StoryProgress } from "@/components/journey/StoryProgress";
@@ -19,6 +20,7 @@ interface StoryViewerProps {
   onPrevious: () => void;
   onNext: () => void;
   onSelectPoster: (index: number) => void;
+  onLanguageChange: (language: Language) => void;
 }
 
 const posterVariants = {
@@ -36,6 +38,7 @@ export function StoryViewer({
   onPrevious,
   onNext,
   onSelectPoster,
+  onLanguageChange,
 }: StoryViewerProps) {
   const text = copy[language];
   const poster = posters[activeIndex];
@@ -68,12 +71,21 @@ export function StoryViewer({
   return (
     <div className="flex min-h-0 flex-1 flex-col px-3 pb-3 tablet:px-6 tablet:pt-1.5 tablet:pb-3">
       <div className="tablet:mx-auto tablet:grid tablet:w-full tablet:max-w-3xl tablet:grid-cols-[auto_1fr_auto] tablet:items-center tablet:gap-4">
-        <div className="flex items-center justify-between gap-3 tablet:contents">
-          <Button variant="quiet" size="sm" onClick={onBack} className="tablet:col-start-1 tablet:row-start-1">
+        <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-2 tablet:contents">
+          <Button variant="quiet" size="sm" onClick={onBack} className="justify-self-start tablet:col-start-1 tablet:row-start-1">
             {text.back}
           </Button>
+          <div className="tablet:hidden">
+            <LanguageSelector
+              language={language}
+              onChange={onLanguageChange}
+              ariaLabel={text.languagePrompt}
+              compact
+              toolbar
+            />
+          </div>
           <p
-            className="font-mono text-sm font-semibold tracking-[0.08em] text-white tablet:col-start-3 tablet:row-start-1"
+            className="justify-self-end font-mono text-sm font-semibold tracking-[0.08em] text-white tablet:col-start-3 tablet:row-start-1"
             aria-hidden="true"
           >
             {String(activeIndex + 1).padStart(2, "0")} / {String(posters.length).padStart(2, "0")}

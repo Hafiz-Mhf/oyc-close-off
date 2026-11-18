@@ -37,6 +37,7 @@
 
 ## Latest UI refinement
 
+- Repositioned the compact `EN | BM` selector into the mobile story toolbar between Back and the poster count, removing the detached second header row while keeping the existing desktop header placement.
 - Updated the English/BM career-conversation reflection wording to use **Start a career chat** / **Mulakan perbualan kerjaya**, with **immediate supervisor** retained in English and **pengurus** used in BM.
 - Added visually prominent, keyboard-accessible external resource cards for **PrinciplesYou** and **Career Adviser** when the strengths reflection is selected. The cards use bilingual prompts and action labels, visible domains, underlined names, external-link icons, full-card click targets and safe new-tab behavior.
 - Added a clear full-name language choice on Welcome and a compact persistent `EN | BM` switch on the rest of the journey.
@@ -287,6 +288,7 @@
 
 ## Bilingual update verification
 
+- Mobile story QA at `320 x 568` and `375 x 667` verified the centered language toolbar, English/BM switching, `html lang="ms"`, exact body/scroll-width parity and no horizontal overflow. Desktop `1440 x 900` retained the existing header selector. Browser console inspection showed zero errors or warnings.
 - The strengths resource cards were verified in English and BM at `375 x 667`; both URLs, localized accessible names, visible domains and action labels rendered correctly, with zero browser console errors or warnings.
 - `npm.cmd run typecheck`, `npm.cmd run lint`, `npm.cmd run build`, and `git diff --check` passed after the reflection copy and resource-link update.
 - `npm.cmd run typecheck`, `npm.cmd run lint`, `npm.cmd run build`, and `git diff --check` passed locally.

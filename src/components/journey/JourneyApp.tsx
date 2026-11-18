@@ -95,6 +95,7 @@ export function JourneyApp() {
       languageControls={screen === "welcome" ? undefined : (
         <LanguageSelector language={language} onChange={setLanguage} ariaLabel={text.languagePrompt} compact />
       )}
+      hideLanguageControlsOnMobile={screen === "story"}
       audioControls={(
         <AudioControls
           language={language}
@@ -151,6 +152,7 @@ export function JourneyApp() {
                 onPrevious={showPreviousPoster}
                 onNext={showNextPoster}
                 onSelectPoster={showPoster}
+                onLanguageChange={setLanguage}
               />
             )}
 

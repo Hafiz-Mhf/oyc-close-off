@@ -7,11 +7,12 @@ interface JourneyShellProps {
   homeLabel: string;
   audioControls?: ReactNode;
   languageControls?: ReactNode;
+  hideLanguageControlsOnMobile?: boolean;
   constrained?: boolean;
   onHome: () => void;
 }
 
-export function JourneyShell({ children, screenLabel, homeLabel, audioControls, languageControls, constrained = false, onHome }: JourneyShellProps) {
+export function JourneyShell({ children, screenLabel, homeLabel, audioControls, languageControls, hideLanguageControlsOnMobile = false, constrained = false, onHome }: JourneyShellProps) {
   return (
     <main className="safe-area-shell relative isolate overflow-hidden">
       <div
@@ -48,7 +49,7 @@ export function JourneyShell({ children, screenLabel, homeLabel, audioControls, 
             />
           </button>
           {languageControls && (
-            <div className="order-3 flex w-full justify-end tablet:order-none tablet:w-auto">
+            <div className={`order-3 w-full justify-end tablet:order-none tablet:flex tablet:w-auto ${hideLanguageControlsOnMobile ? "hidden" : "flex"}`}>
               {languageControls}
             </div>
           )}
