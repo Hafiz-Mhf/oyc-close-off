@@ -6,9 +6,12 @@ export interface ReflectionOption {
   description: string;
   takeaway: string;
   resourcePrompt?: string;
-  resourceActionLabel?: string;
   resources?: readonly {
-    label: string;
+    stepLabel: string;
+    title: string;
+    description: string;
+    resourceName: string;
+    actionLabel: string;
     url: string;
     displayUrl: string;
   }[];
@@ -20,16 +23,23 @@ export const reflectionOptions: readonly ReflectionOption[] = [
     label: "Discover my strengths",
     description: "Understand what I enjoy and do well.",
     takeaway: "Start by recognising the strengths you already bring to your work.",
-    resourcePrompt: "✨ Haven't started? It's never too late!",
-    resourceActionLabel: "Open resource",
+    resourcePrompt: "Ready to begin? Follow these two steps:",
     resources: [
       {
-        label: "PrinciplesYou",
+        stepLabel: "Step 1",
+        title: "Take the free assessment",
+        description: "Complete PrinciplesYou and save your assessment report.",
+        resourceName: "PrinciplesYou",
+        actionLabel: "Take the assessment",
         url: "https://principlesyou.com/",
         displayUrl: "principlesyou.com",
       },
       {
-        label: "Career Adviser",
+        stepLabel: "Step 2",
+        title: "Explore your career possibilities",
+        description: "Upload your assessment report to the MRANTI Career Path Adviser.",
+        resourceName: "MRANTI Career Path Adviser",
+        actionLabel: "Upload your report",
         url: "https://gemini.google.com/gem/c132b301ca89?usp=sharing",
         displayUrl: "gemini.google.com",
       },
@@ -63,16 +73,23 @@ const bmReflectionOptions: readonly ReflectionOption[] = [
     label: "Kenali kekuatan saya",
     description: "Fahami perkara yang saya minati dan lakukan dengan baik.",
     takeaway: "Mulakan dengan mengenali kekuatan yang telah anda bawa ke tempat kerja.",
-    resourcePrompt: "✨ Belum mula? Masih belum terlambat!",
-    resourceActionLabel: "Buka sumber",
+    resourcePrompt: "Bersedia untuk bermula? Ikuti dua langkah ini:",
     resources: [
       {
-        label: "PrinciplesYou",
+        stepLabel: "Langkah 1",
+        title: "Ambil penilaian percuma",
+        description: "Lengkapkan PrinciplesYou dan simpan laporan penilaian anda.",
+        resourceName: "PrinciplesYou",
+        actionLabel: "Ambil penilaian",
         url: "https://principlesyou.com/",
         displayUrl: "principlesyou.com",
       },
       {
-        label: "Career Adviser",
+        stepLabel: "Langkah 2",
+        title: "Terokai potensi laluan kerjaya",
+        description: "Muat naik laporan penilaian anda ke MRANTI Career Path Adviser.",
+        resourceName: "MRANTI Career Path Adviser",
+        actionLabel: "Muat naik laporan",
         url: "https://gemini.google.com/gem/c132b301ca89?usp=sharing",
         displayUrl: "gemini.google.com",
       },

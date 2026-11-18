@@ -1,4 +1,4 @@
-import type { KeyboardEvent } from "react";
+import { Fragment, type KeyboardEvent } from "react";
 import { Button } from "@/components/ui/Button";
 import { copy } from "@/data/copy";
 import { getReflectionOptions } from "@/data/reflections";
@@ -114,42 +114,55 @@ export function ReflectionScreen({
                   <p className="text-sm font-bold text-white tablet:text-base">
                     {selectedOption.resourcePrompt}
                   </p>
-                  <div className="mt-3 grid gap-3 tablet:grid-cols-2">
-                    {selectedOption.resources.map((resource) => (
-                      <a
-                        key={resource.url}
-                        href={resource.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="group flex min-h-24 cursor-pointer items-center justify-between gap-4 rounded-xl border border-oyc-cyan/70 bg-oyc-cyan/10 p-4 text-left transition-[border-color,background-color,box-shadow,transform] hover:border-oyc-cyan hover:bg-oyc-cyan/18 hover:shadow-[0_0_0_1px_rgb(0_229_237/35%)] active:scale-[0.99] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-oyc-cyan"
-                        aria-label={`${resource.label}: ${selectedOption.resourceActionLabel} (${newTabLabel})`}
-                      >
-                        <span className="min-w-0">
-                          <span className="block font-bold text-white underline decoration-oyc-cyan decoration-2 underline-offset-4">
-                            {resource.label}
-                          </span>
-                          <span className="mt-1 block text-xs text-oyc-text-muted">
-                            {resource.displayUrl}
-                          </span>
-                          <span className="mt-2 block text-sm font-semibold text-oyc-cyan">
-                            {selectedOption.resourceActionLabel}
-                          </span>
-                        </span>
-                        <svg
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          className="h-6 w-6 shrink-0 text-oyc-cyan transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-                          aria-hidden="true"
+                  <div className="mt-3 grid gap-0 tablet:grid-cols-[minmax(0,1fr)_2rem_minmax(0,1fr)] tablet:items-stretch">
+                    {selectedOption.resources.map((resource, index) => (
+                      <Fragment key={resource.url}>
+                        <a
+                          href={resource.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="group flex min-h-52 cursor-pointer flex-col rounded-xl border border-oyc-cyan/55 bg-oyc-cyan/8 p-4 text-left transition-[border-color,background-color,box-shadow,transform] hover:border-oyc-cyan hover:bg-oyc-cyan/14 hover:shadow-[0_10px_24px_-16px_rgb(0_229_237/55%)] active:scale-[0.99] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-oyc-cyan"
+                          aria-label={`${resource.stepLabel}: ${resource.title}. ${resource.actionLabel} (${newTabLabel})`}
                         >
-                          <path d="M15 3h6v6" />
-                          <path d="M10 14 21 3" />
-                          <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
-                        </svg>
-                      </a>
+                          <span className="text-xs font-bold tracking-[0.12em] text-oyc-cyan uppercase">
+                            {resource.stepLabel}
+                          </span>
+                          <span className="mt-2 block text-base leading-6 font-bold text-white">
+                            {resource.title}
+                          </span>
+                          <span className="mt-1.5 block text-sm leading-5 text-oyc-text-muted">
+                            {resource.description}
+                          </span>
+                          <span className="mt-3 block text-xs font-semibold text-white">
+                            {resource.resourceName}
+                            <span className="ml-1 font-normal text-oyc-text-muted">· {resource.displayUrl}</span>
+                          </span>
+                          <span className="mt-auto flex min-h-11 items-center justify-between gap-3 border-t border-oyc-border/70 pt-3 text-sm font-bold text-oyc-cyan">
+                            <span className="underline decoration-2 underline-offset-4">{resource.actionLabel}</span>
+                            <svg
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              strokeWidth="2"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              className="h-5 w-5 shrink-0 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                              aria-hidden="true"
+                            >
+                              <path d="M15 3h6v6" />
+                              <path d="M10 14 21 3" />
+                              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                            </svg>
+                          </span>
+                        </a>
+                        {index === 0 && (
+                          <span className="flex h-8 items-center justify-center text-oyc-cyan tablet:h-auto" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5 rotate-90 tablet:rotate-0">
+                              <path d="M5 12h14M13 6l6 6-6 6" />
+                            </svg>
+                          </span>
+                        )}
+                      </Fragment>
                     ))}
                   </div>
                 </div>
