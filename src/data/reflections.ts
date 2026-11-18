@@ -5,6 +5,13 @@ export interface ReflectionOption {
   label: string;
   description: string;
   takeaway: string;
+  resourcePrompt?: string;
+  resourceActionLabel?: string;
+  resources?: readonly {
+    label: string;
+    url: string;
+    displayUrl: string;
+  }[];
 }
 
 export const reflectionOptions: readonly ReflectionOption[] = [
@@ -13,11 +20,25 @@ export const reflectionOptions: readonly ReflectionOption[] = [
     label: "Discover my strengths",
     description: "Understand what I enjoy and do well.",
     takeaway: "Start by recognising the strengths you already bring to your work.",
+    resourcePrompt: "✨ Haven't started? It's never too late!",
+    resourceActionLabel: "Open resource",
+    resources: [
+      {
+        label: "PrinciplesYou",
+        url: "https://principlesyou.com/",
+        displayUrl: "principlesyou.com",
+      },
+      {
+        label: "Career Adviser",
+        url: "https://gemini.google.com/gem/c132b301ca89?usp=sharing",
+        displayUrl: "gemini.google.com",
+      },
+    ],
   },
   {
     id: "conversation",
-    label: "Have a career chat",
-    description: "Talk with my immediate supervisor.",
+    label: "Start a career chat",
+    description: "Have a conversation with my immediate supervisor.",
     takeaway:
       "A meaningful career conversation with your immediate supervisor can help you see your next step more clearly.",
   },
@@ -42,12 +63,26 @@ const bmReflectionOptions: readonly ReflectionOption[] = [
     label: "Kenali kekuatan saya",
     description: "Fahami perkara yang saya minati dan lakukan dengan baik.",
     takeaway: "Mulakan dengan mengenali kekuatan yang telah anda bawa ke tempat kerja.",
+    resourcePrompt: "✨ Belum mula? Masih belum terlambat!",
+    resourceActionLabel: "Buka sumber",
+    resources: [
+      {
+        label: "PrinciplesYou",
+        url: "https://principlesyou.com/",
+        displayUrl: "principlesyou.com",
+      },
+      {
+        label: "Career Adviser",
+        url: "https://gemini.google.com/gem/c132b301ca89?usp=sharing",
+        displayUrl: "gemini.google.com",
+      },
+    ],
   },
   {
     id: "conversation",
-    label: "Adakan perbualan kerjaya",
-    description: "Berbual dengan penyelia terdekat saya.",
-    takeaway: "Perbualan kerjaya yang bermakna dengan penyelia terdekat boleh membantu anda melihat langkah seterusnya dengan lebih jelas.",
+    label: "Mulakan perbualan kerjaya",
+    description: "Berbual dengan pengurus saya.",
+    takeaway: "Perbualan kerjaya yang bermakna dengan pengurus boleh membantu anda melihat langkah seterusnya dengan lebih jelas.",
   },
   {
     id: "learning",

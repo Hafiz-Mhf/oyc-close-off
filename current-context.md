@@ -37,6 +37,8 @@
 
 ## Latest UI refinement
 
+- Updated the English/BM career-conversation reflection wording to use **Start a career chat** / **Mulakan perbualan kerjaya**, with **immediate supervisor** retained in English and **pengurus** used in BM.
+- Added visually prominent, keyboard-accessible external resource cards for **PrinciplesYou** and **Career Adviser** when the strengths reflection is selected. The cards use bilingual prompts and action labels, visible domains, underlined names, external-link icons, full-card click targets and safe new-tab behavior.
 - Added a clear full-name language choice on Welcome and a compact persistent `EN | BM` switch on the rest of the journey.
 - Language switching keeps the current poster number, progress, reflection selection and audio state while changing the poster, transcript, supporting controls, reflection and closing copy.
 - Added Bahasa Melayu accessible poster titles, alt text and transcripts alongside the owner-supplied BM artwork.
@@ -285,6 +287,8 @@
 
 ## Bilingual update verification
 
+- The strengths resource cards were verified in English and BM at `375 x 667`; both URLs, localized accessible names, visible domains and action labels rendered correctly, with zero browser console errors or warnings.
+- `npm.cmd run typecheck`, `npm.cmd run lint`, `npm.cmd run build`, and `git diff --check` passed after the reflection copy and resource-link update.
 - `npm.cmd run typecheck`, `npm.cmd run lint`, `npm.cmd run build`, and `git diff --check` passed locally.
 - Mobile browser QA at `375 x 667` verified English/BM selection on Welcome, same-poster language switching, BM next navigation, BM zoom and transcript, reflection, closing, revisit, and `html lang="ms"`.
 - Mobile body and root widths both remained exactly `375px`; the first QA pass found and the implementation fixed an overlapping mobile header hit area between the language switch and audio island.
@@ -292,10 +296,18 @@
 - Final browser console inspection showed zero errors and zero warnings. No committed visual-regression baseline exists, so automated pixel-diff status remains inconclusive.
 - Windows Computer Use initialization was unavailable due a sandbox helper error; the verified click-through used the installed Playwright CLI against the local production build.
 
+## Live deployment and access
+
+- The bilingual production deployment at `https://oyc-close-off.vercel.app` returned `HTTP 200 OK` on 18 November 2026.
+- The microsite is ready for normal staff sharing.
+- Access uses a public, unlisted URL with no sign-in or company-network restriction. Anyone with the link can open it; the URL is not a private access control.
+- No application, asset, infrastructure or deployment change is required for this access model.
+
 ## Remaining work
 
-- Verify the automatic Vercel deployment after GitHub finishes building the new `main` commit.
+- No implementation or deployment work remains.
+- Confirm the public-link access model with HR before distribution if that approval has not already been recorded.
 
 ## Next action
 
-Confirm the bilingual journey on the live Vercel deployment, then share the updated link with staff.
+Share the approved production link with staff after the access model is confirmed.

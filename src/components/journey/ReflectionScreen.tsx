@@ -22,6 +22,7 @@ export function ReflectionScreen({
   onBack,
 }: ReflectionScreenProps) {
   const text = copy[language];
+  const newTabLabel = language === "bm" ? "dibuka dalam tab baharu" : "opens in a new tab";
   const reflectionOptions = getReflectionOptions(language);
   const selectedOption = reflectionOptions.find((option) => option.id === selected);
 
@@ -108,6 +109,51 @@ export function ReflectionScreen({
               <p className="mt-2 text-sm leading-6 text-oyc-text tablet:text-base">
                 {selectedOption.takeaway}
               </p>
+              {selectedOption.resources && (
+                <div className="mt-4 border-t border-oyc-border/70 pt-4">
+                  <p className="text-sm font-bold text-white tablet:text-base">
+                    {selectedOption.resourcePrompt}
+                  </p>
+                  <div className="mt-3 grid gap-3 tablet:grid-cols-2">
+                    {selectedOption.resources.map((resource) => (
+                      <a
+                        key={resource.url}
+                        href={resource.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group flex min-h-24 cursor-pointer items-center justify-between gap-4 rounded-xl border border-oyc-cyan/70 bg-oyc-cyan/10 p-4 text-left transition-[border-color,background-color,box-shadow,transform] hover:border-oyc-cyan hover:bg-oyc-cyan/18 hover:shadow-[0_0_0_1px_rgb(0_229_237/35%)] active:scale-[0.99] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-oyc-cyan"
+                        aria-label={`${resource.label}: ${selectedOption.resourceActionLabel} (${newTabLabel})`}
+                      >
+                        <span className="min-w-0">
+                          <span className="block font-bold text-white underline decoration-oyc-cyan decoration-2 underline-offset-4">
+                            {resource.label}
+                          </span>
+                          <span className="mt-1 block text-xs text-oyc-text-muted">
+                            {resource.displayUrl}
+                          </span>
+                          <span className="mt-2 block text-sm font-semibold text-oyc-cyan">
+                            {selectedOption.resourceActionLabel}
+                          </span>
+                        </span>
+                        <svg
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          className="h-6 w-6 shrink-0 text-oyc-cyan transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                          aria-hidden="true"
+                        >
+                          <path d="M15 3h6v6" />
+                          <path d="M10 14 21 3" />
+                          <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                        </svg>
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           )}
         </div>
